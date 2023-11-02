@@ -1,0 +1,48 @@
+.map-image {
+    width: 100%;
+}
+
+.building-markers {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+
+.camera-marker {
+    position: absolute;
+    display: inline-block;
+    width: 80px;
+    height: 35px;
+    border-radius: 30%;
+    font-size: 12px;
+    line-height: 30px;
+    text-align: center;
+    color: #fff;
+    text-decoration: none;
+    transition: transform .2s;
+    cursor: pointer;
+}
+
+.camera-marker:hover {
+    transform: scale(1.2);
+}
+
+.building-card {
+    margin-top: 0px;
+    padding: 40px 10px;
+    border: 1px solid #fff;
+}
+
+.card-text {
+    border-radius: 5px;
+    padding: 10px;
+    font-size: 14px;
+    line-height: 1.5;
+    transition: background-color .2s;
+}
+
+.card-text:hover {
+    background-color: rgba(0, 0, 0, .05);
+}
