@@ -43,20 +43,20 @@ const updateCamera = async (req, res, next) => {
     try {
         const camera = await Camera.findOne({ cameraId: req.params.cameraId });
         if (camera) {
-            camera.cameraName = req.body.cameraName;
-            camera.buildingId = req.body.buildingId;
-            camera.cameraType = req.body.cameraType;
-            camera.resolution = req.body.resolution;
-            camera.location = req.body.location;
-            camera.status = req.body.status;
+            const updatedCameraData = req.body;
+            Object.keys(updatedCameraData).forEach(key => {
+                // Update only the fields that are present in the request body
+                    camera[key] = updatedCameraData[key];
+            });
             const updatedCamera = await camera.save();
+            console.log("updatedCamera", updatedCamera);
             res.status(200).json(updatedCamera);
         } else {
             res.status(404).json({ message: 'Camera not found' });
         }
     } catch (error) {
         next(error);
-    }   
+    }
 };
 
 const deleteCamera = async (req, res, next) => {

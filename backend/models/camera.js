@@ -10,26 +10,34 @@ const cameraSchema = new mongoose.Schema({
     ref: 'Building',
   },
   cameraType: {
-    type: String
+    type: String // DSLR / Mirrorless / Compact
   },
   resolution: {
-    type: String
+    type: String // 4K / 1080p / 720p
   },
   location: {
-    type: [Number],
+    type: [Number], // lat, long
     required: true
+  },
+  timeframes: {
+    type: String // 30s , 60s
+  },
+  dataStorage: {
+    type: String // Local / Cloud
   },
   operationStatus: {
     type: String,
-    required: true
+    required: true,
+    default: 'Online'
   },
   healthStatus: {
     type: String,
-    required: true
+    required: true,
+    default: 'Active'
   },
   alerts: [{
     type: mongoose.Schema.Types.ObjectId,
-    ref: 'Alert'
+    ref: 'Alert',
   }]
 });
 

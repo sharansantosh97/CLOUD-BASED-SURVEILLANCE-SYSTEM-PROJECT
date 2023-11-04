@@ -2,7 +2,8 @@
 import { Container, Row, Col, Card } from "react-bootstrap"
 // import LeftNavBarAdmin from "./LeftNavBarAdmin/LeftNavBarAdmin"
 import axios from "axios"
-import React, { useState } from "react"
+import React, { useState, useEffect } from "react"
+
 // import NavBarLoggedInAdmin from "./NavbarAdmin/NavBarLoggedInAdmin"
 // import "./AddUser.css"
 import mapImage from "./map.jpeg"
@@ -11,7 +12,32 @@ import "./CampusViewPage.css"
 import { Link } from "react-router-dom"
 
 function Home() {
-  const buildings = [
+  const baseURL = process.env.REACT_APP_BACKEND_URL;
+
+  const [buildings, setBuildings] = useState([]);
+  console.log("process.env.BACKEND_URL", process.env.REACT_APP_BACKEND_URL);
+
+  useEffect(() => {
+    fetchBuildings();
+  }, []);
+
+  const fetchBuildings = () => {
+    axios.get(`${baseURL}/building`)
+    .then((response) => {
+            console.log("response: ", response.data)
+            if (response.status === 200) {
+                console.log("success")
+                setBuildings(response.data?.buildings);
+            }
+        })
+        .catch((error) => {
+            console.log("error: ", error)
+        })
+  };
+
+
+  const buildings1 = 
+  [
     {
       id: 1,
       name: "Campus",
@@ -180,11 +206,11 @@ function Home() {
                       className='map-image'
                     />
                     {buildings.map((building) => (
-                      <div key={building.id} className='building-markers'>
+                      <div key={building._id} className='building-markers'>
                         {building.cameras.map((camera) => (
                           <Link
                             to='/floormap'
-                            key={camera.id}
+                            key={camera._id}
                             className={`camera-marker text-${getOperationStatusColor(
                               camera.operationStatus
                             )} `}
@@ -202,17 +228,17 @@ function Home() {
                   </Col>
                   <Col sm={4}>
                     {buildings.map((building) => (
-                      <div key={building.id}>
+                      <div key={building._id}>
                         <Card className='building-card'>
                           <Card.Body style={{ paddingTop: 10, backgroundColor: '#eee' }}>
                             {building.cameras.map((camera) => (
                               <Card.Text
                               style={{fontSize: "16px"}}
-                                key={camera.id}
+                                key={camera._id}
                                 className={`mb-2 text-${getOperationStatusColor(
                                   camera.operationStatus
                                 )}`}
-                                id={camera.id}
+                                id={camera._id}
                               >
                                 <strong>{camera.name}</strong>
                                 <br />
