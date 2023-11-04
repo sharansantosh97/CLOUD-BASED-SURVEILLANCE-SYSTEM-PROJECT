@@ -16,6 +16,7 @@ import LeftNavBar from "../LeftNavBar/LeftNavBar";
 import NavBarLoggedIn from "../Navbar/NavBarLoggedIn";
 import DeviceManagmentNavBar from "./DeviceManagmentNavBar";
 import {useState} from "react";
+import DeviceDataTable from "./DeviceDataTable";
 
 
 
@@ -37,9 +38,13 @@ const path = location.pathname.split('/')[2];
                 <Col lg={2}> <LeftNavBar/> </Col>
                 <Col lg={10}>
 
-                    <DeviceManagmentNavBar/>
+                    {/* <DeviceManagmentNavBar/>
 
-                    <Camera/>
+                    <Camera/> */}
+                    <Container style={{marginTop:"5%"}}>
+
+                   <DeviceDataTable></DeviceDataTable>
+                </Container>
 
                 </Col>
             </Row>

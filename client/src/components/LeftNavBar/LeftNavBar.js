@@ -43,7 +43,7 @@ const LeftMenu = () => {
                   <span class='pcoded-mtext'>Home</span>
                 </NavLink>
               </li>
-              {/* <li
+              <li
                 data-username='Sample Page'
                 class={
                   path === "deviceManagement" ? "nav-item active" : "nav-item"
@@ -55,7 +55,7 @@ const LeftMenu = () => {
                   </span>
                   <span class='pcoded-mtext'>Camera Management</span>
                 </NavLink>
-              </li> */}
+              </li>
               <li
                 data-username='Sample Page'
                 class={
