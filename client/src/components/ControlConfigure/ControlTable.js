@@ -1,21 +1,39 @@
-import { Table } from 'react-bootstrap';
-import { useState } from 'react';
-import {  ToggleButton } from 'react-bootstrap';
-import BootstrapSwitchButton from 'bootstrap-switch-button-react';
+import { Table } from "react-bootstrap";
+import { ToggleButton } from "react-bootstrap";
+import BootstrapSwitchButton from "bootstrap-switch-button-react";
+import axios from "axios";
+import React, { useState, useEffect } from "react";
+import DeviceTable from "../DeviceTable";
 
 function ControlTable() {
-  const [cameras, setCameras] = useState([
-    { id: 1, name: 'Camera 1', isActive: true },
-    { id: 2, name: 'Camera 2', isActive: false },
-    { id: 3, name: 'Camera 3', isActive: true },
-    { id: 4, name: 'Camera 4', isActive: false },
-    { id: 5, name: 'Camera 5', isActive: true },
-    { id: 6, name: 'Camera 6', isActive: false },
-    { id: 7, name: 'Camera 7', isActive: true },
-    { id: 8, name: 'Camera 8', isActive: false },
-    { id: 9, name: 'Camera 9', isActive: true },
-    { id: 10, name: 'Camera 10', isActive: false },
-  ]);
+  const baseURL = process.env.REACT_APP_BACKEND_URL;
+
+  const [cameras, setCameras] = useState([]);
+
+  useEffect(() => {
+    fetchCameras();
+  }, []);
+
+  const fetchCameras = () => {
+    axios
+      .get(`${baseURL}/camera`)
+      .then((response) => {
+        console.log("response: ", response.data);
+        if (response.status === 200) {
+          console.log("success");
+          setCameras(response.data?.cameras);
+        }
+      })
+      .catch((error) => {
+        console.log("error: ", error);
+      });
+  };
+
+  const updateCamera = () => {};
+
+  const deleteCamera = () => {};
+
+  const addCamera = () => {};
 
   const handleSwitchChange = (cameraId) => {
     const updatedCameras = cameras.map((camera) => {
@@ -28,32 +46,63 @@ function ControlTable() {
   };
 
   return (
+    <>
+    <DeviceTable></DeviceTable>
     <Table striped bordered hover>
       <thead>
         <tr>
-          <th>Camera ID</th>
           <th>Camera Name</th>
+          <th>Type</th>
+          <th>Health</th>
+          <th>Building</th>
+          <th>Location Type</th>
+          <th>Storage</th>
           <th>Actions</th>
+          <th>Modes</th>
         </tr>
       </thead>
       <tbody>
         {cameras.map((camera) => (
-          <tr key={camera.id}>
-            <td>{camera.id}</td>
+          <tr key={camera._id}>
             <td>{camera.name}</td>
+            <td>{camera.cameraType}</td>
+            <td>{camera.healthStatus}</td>
+            <td>{camera.buildingName}</td>
+            <td>{camera.locationType}</td>
+            <td>{camera.dataStorage}</td>
             <td>
-            <BootstrapSwitchButton
+              <BootstrapSwitchButton
                 type="checkbox"
-                checked={camera.isActive}
+                checked={
+                  camera.operationStatus?.toLowerCase() == "online"
+                    ? true
+                    : false
+                }
                 onChange={() => {
                   camera.action = !camera.isActive;
                 }}
               />
             </td>
+            <td>
+              <a href="{camera.videoUrl}" class="button-link" target="_blank">
+                View
+              </a>{" "}
+              <br></br>
+              <a href="{camera.videoUrl}" class="button-link" target="_blank">
+                Add
+              </a>
+              <a href="{camera.videoUrl}" class="button-link" target="_blank">
+                Update
+              </a>
+              <a href="{camera.videoUrl}" class="button-link" target="_blank">
+                Delete
+              </a>
+            </td>
           </tr>
         ))}
       </tbody>
     </Table>
+    </>
   );
 }
 

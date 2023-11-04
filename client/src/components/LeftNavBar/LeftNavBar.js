@@ -43,7 +43,7 @@ const LeftMenu = () => {
                   <span class='pcoded-mtext'>Home</span>
                 </NavLink>
               </li>
-              <li
+              {/* <li
                 data-username='Sample Page'
                 class={
                   path === "deviceManagement" ? "nav-item active" : "nav-item"
@@ -55,18 +55,7 @@ const LeftMenu = () => {
                   </span>
                   <span class='pcoded-mtext'>Camera Management</span>
                 </NavLink>
-              </li>
-              <li
-                data-username='Sample Page'
-                class={path === "monitor" ? "nav-item active" : "nav-item"}
-              >
-                <NavLink href='/monitor'>
-                  <span class='pcoded-micon'>
-                    <i class='feather icon-monitor'></i>
-                  </span>
-                  <span class='pcoded-mtext'>Monitor and Tracking</span>
-                </NavLink>
-              </li>
+              </li> */}
               <li
                 data-username='Sample Page'
                 class={
@@ -80,6 +69,18 @@ const LeftMenu = () => {
                   <span class='pcoded-mtext'>Control & Configure</span>
                 </NavLink>
               </li>
+              <li
+                data-username='Sample Page'
+                class={path === "monitor" ? "nav-item active" : "nav-item"}
+              >
+                <NavLink href='/monitor'>
+                  <span class='pcoded-micon'>
+                    <i class='feather icon-monitor'></i>
+                  </span>
+                  <span class='pcoded-mtext'>Monitor and Tracking</span>
+                </NavLink>
+              </li>
+              
               <li
                 data-username='Sample Page'
                 class={path === "billing" ? "nav-item active" : "nav-item"}

@@ -1,13 +1,21 @@
 const Alert = require('../models/alert');
 const Camera = require('../models/camera');
+const Building = require('../models/building');
 
 const getCameras = async (req, res, next) => {
     try {
         const cameras = await Camera.find();
+        const alerts = await Alert.find();
+        const buildings = await Building.find();
+        let result = [];
         for(let camera of cameras) {
-            camera.alerts = await Alert.find({cameraId: camera._id});
+            let data = JSON.parse(JSON.stringify(camera));
+            data.alerts = alerts.filter(alert => alert.cameraId.toString() === camera._id.toString());
+            let building = buildings.find(building => building._id.toString() === camera.buildingId.toString());
+            data.buildingName = building?.name;
+            result.push(data);
           }
-        res.status(200).json({ cameras });
+        res.status(200).json({ cameras: result });
     } catch (error) {
         next(error);
     }

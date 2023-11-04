@@ -1,10 +1,5 @@
 import Container from "react-bootstrap/Container"
 
-
-
-import React, { useState } from "react"
-
-
 import Row from "react-bootstrap/Row"
 import Col from "react-bootstrap/Col"
 
@@ -14,11 +9,33 @@ import CameraTable from "../CameraTable"
 
 import { Nav, Navbar } from "react-bootstrap"
 import "./MonitorAndTrack.css"
+import axios from "axios"
+import React, { useState, useEffect } from "react"
 
 
 
 const Monitor = () => {
+  const baseURL = process.env.REACT_APP_BACKEND_URL;
 
+  const [cameras, setCameras] = useState([]);
+
+  useEffect(() => {
+    fetchCameras();
+  }, []);
+
+  const fetchCameras = () => {
+    axios.get(`${baseURL}/camera`)
+    .then((response) => {
+            console.log("response: ", response.data)
+            if (response.status === 200) {
+                console.log("success")
+                setCameras(response.data?.cameras);
+            }
+        })
+        .catch((error) => {
+            console.log("error: ", error)
+        })
+  };
 
   return (
     <>
@@ -34,7 +51,7 @@ const Monitor = () => {
             <h3 style={{ textAlign: "center", marginTop: "5%" }}>
               Monitor and Tracking
             </h3>
-            <CameraTable></CameraTable>
+            <CameraTable cameras = {cameras}/>
           </Container>
         </Col>
       </Row>

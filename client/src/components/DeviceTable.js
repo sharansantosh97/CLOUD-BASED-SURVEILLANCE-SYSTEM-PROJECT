@@ -1,7 +1,32 @@
-import { useState } from 'react';
 import { Table, Button, Modal, Form } from 'react-bootstrap';
+import axios from "axios"
+import React, { useState, useEffect } from "react"
 
 function DeviceTable() {
+
+  const baseURL = process.env.REACT_APP_BACKEND_URL;
+
+  const [buildings, setBuildings] = useState([]);
+
+  useEffect(() => {
+    fetchBuildings();
+  }, []);
+
+  const fetchBuildings = () => {
+    axios.get(`${baseURL}/building`)
+    .then((response) => {
+            console.log("response: ", response.data)
+            if (response.status === 200) {
+                console.log("success")
+                setBuildings(response.data?.buildings);
+            }
+        })
+        .catch((error) => {
+            console.log("error: ", error)
+        })
+  };
+
+
   const [showAddModal, setShowAddModal] = useState(false);
   const [newRecord, setNewRecord] = useState({
     name: '',
@@ -34,12 +59,12 @@ function DeviceTable() {
   return (
    <div>
     <Button variant="primary" onClick={handleShowAddModal}>
-        Add Record
+        Add Camera
       </Button>
 
       <Modal show={showAddModal} onHide={handleCloseAddModal}>
         <Modal.Header closeButton>
-          <Modal.Title>Add New Record</Modal.Title>
+          <Modal.Title>Add Camera</Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <Form>
@@ -53,7 +78,7 @@ function DeviceTable() {
               />
             </Form.Group>
             <Form.Group controlId="buildingId">
-              <Form.Label>Building ID</Form.Label>
+              <Form.Label>Building</Form.Label>
               <Form.Control
                 type="text"
                 placeholder="Enter building ID"
@@ -118,7 +143,7 @@ function DeviceTable() {
             </Modal.Footer>
             </Modal>
        {/* Table to display added records */}
-  <Table striped bordered hover>
+  {/* <Table striped bordered hover>
     <thead>
       <tr>
         <th>Name</th>
@@ -143,7 +168,7 @@ function DeviceTable() {
         </tr>
       ))}
     </tbody>
-  </Table>
+  </Table> */}
    </div>
       
 )};

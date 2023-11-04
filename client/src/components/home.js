@@ -36,43 +36,43 @@ function Home() {
   };
 
 
-  const buildings1 = 
-  [
-    {
-      id: 1,
-      name: "Campus",
-      cameras: [
-        {
-          id: 1,
-          name: "Building 1",
-          operationStatus: "Online",
-          healthStatus: "Good",
-          location: [50, 50],
-        },
-        {
-          id: 2,
-          name: "Building 2",
-          operationStatus: "Online",
-          healthStatus: "Excellent",
-          location: [30, 40],
-        },
-        {
-          id: 3,
-          name: "Building 3",
-          operationStatus: "Offline",
-          healthStatus: "Needs Maintenance",
-          location: [40, 30],
-        },
-        {
-          id: 4,
-          name: "Building 4",
-          operationStatus: "Online",
-          healthStatus: "Fair",
-          location: [60, 40],
-        },
-      ],
-    },
-  ]
+  // const buildings1 = 
+  // [
+  //   {
+  //     id: 1,
+  //     name: "Campus",
+  //     cameras: [
+  //       {
+  //         id: 1,
+  //         name: "Building 1",
+  //         operationStatus: "Online",
+  //         healthStatus: "Good",
+  //         location: [50, 50],
+  //       },
+  //       {
+  //         id: 2,
+  //         name: "Building 2",
+  //         operationStatus: "Online",
+  //         healthStatus: "Excellent",
+  //         location: [30, 40],
+  //       },
+  //       {
+  //         id: 3,
+  //         name: "Building 3",
+  //         operationStatus: "Offline",
+  //         healthStatus: "Needs Maintenance",
+  //         location: [40, 30],
+  //       },
+  //       {
+  //         id: 4,
+  //         name: "Building 4",
+  //         operationStatus: "Online",
+  //         healthStatus: "Fair",
+  //         location: [60, 40],
+  //       },
+  //     ],
+  //   },
+  // ]
 
   const getOperationStatusColor = (status) => {
     if (status === "Online") {
@@ -207,7 +207,7 @@ function Home() {
                     />
                     {buildings.map((building) => (
                       <div key={building._id} className='building-markers'>
-                        {building.cameras.map((camera) => (
+                        {building?.cameras?.map((camera) => (
                           <Link
                             to='/floormap'
                             key={camera._id}
@@ -231,7 +231,7 @@ function Home() {
                       <div key={building._id}>
                         <Card className='building-card'>
                           <Card.Body style={{ paddingTop: 10, backgroundColor: '#eee' }}>
-                            {building.cameras.map((camera) => (
+                            {building?.cameras?.map((camera) => (
                               <Card.Text
                               style={{fontSize: "16px"}}
                                 key={camera._id}

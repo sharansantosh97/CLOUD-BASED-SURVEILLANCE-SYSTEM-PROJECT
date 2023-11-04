@@ -19,11 +19,17 @@ const cameraSchema = new mongoose.Schema({
     type: [Number], // lat, long
     required: true
   },
+  locationType: {
+    type: String // Indoor / Outdoor
+  },
   timeframes: {
     type: String // 30s , 60s
   },
   dataStorage: {
     type: String // Local / Cloud
+  },
+  videoUrl : {
+    type: String
   },
   operationStatus: {
     type: String,
