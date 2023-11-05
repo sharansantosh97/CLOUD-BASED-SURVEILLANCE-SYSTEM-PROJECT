@@ -1,5 +1,5 @@
 import { Table, Button, Modal, Form } from 'react-bootstrap';
-import axios from "axios"
+import axios, { Axios } from "axios"
 import React, { useState, useEffect } from "react"
 
 function DeviceTable() {
@@ -8,9 +8,25 @@ function DeviceTable() {
 
   const [buildings, setBuildings] = useState([]);
 
+  const [newRecord, setNewRecord] = useState({
+    name: '',
+    buildingId: '',
+    cameraType: '',
+    resolution: '',
+    location: '',
+    timeframe: '',
+    dataStorage: '',
+    locationType: '',
+    videoUrl: ''
+  });
+  
   useEffect(() => {
     fetchBuildings();
   }, []);
+
+  useEffect(() => {
+    fetchBuildings();
+  }, [newRecord]);
 
   const fetchBuildings = () => {
     axios.get(`${baseURL}/building`)
@@ -26,17 +42,22 @@ function DeviceTable() {
         })
   };
 
+  const addCamera = (newCamera) => {
+    newCamera.location = newCamera.location.split(",");
+    axios.post(`${baseURL}/camera`, newCamera)
+    .then((response) => {
+            console.log("response: ", response.data)
+            if (response.status === 200) {
+                console.log("success")
+            }
+        })
+        .catch((error) => {
+            console.log("error: ", error)
+        })
+  };
 
   const [showAddModal, setShowAddModal] = useState(false);
-  const [newRecord, setNewRecord] = useState({
-    name: '',
-    buildingId: '',
-    cameraType: '',
-    resolution: '',
-    location: '',
-    operationStatus: '',
-    healthStatus: ''
-  });
+
   const [records,setRecords] =useState([]);
 
   const handleCloseAddModal = () => setShowAddModal(false);
@@ -51,8 +72,9 @@ function DeviceTable() {
   const handleAddRecord = () => {
     // Add code to add new record to data source
     console.log('Adding new record:', newRecord);
-    setRecords([...records,newRecord]);
-    console.log(records);
+    addCamera(newRecord);
+    // setRecords([...records,newRecord]);
+    // console.log(records);
     handleCloseAddModal();
   };
 
@@ -113,21 +135,39 @@ function DeviceTable() {
                 onChange={handleInputChange}
               />
             </Form.Group>
-            <Form.Group controlId="operationStatus">
-              <Form.Label>Operation Status</Form.Label>
+            <Form.Group controlId="timeframe">
+              <Form.Label>Time Frame</Form.Label>
               <Form.Control
                 type="text"
-                placeholder="Enter operation status"
-             name='operationStatus'
+                placeholder="Enter time frame for the video capture"
+             name='timeframe'
                 onChange={handleInputChange}
               />
             </Form.Group>
-            <Form.Group controlId="healthStatus">
-              <Form.Label>Health Status</Form.Label>
+            <Form.Group controlId="dataStorage">
+              <Form.Label>Data Storage</Form.Label>
               <Form.Control
                 type="text"
-                placeholder="Enter health status"
-                name='healthStatus'
+                placeholder="Enter data storage location"
+             name='dataStorage'
+                onChange={handleInputChange}
+              />
+            </Form.Group>
+            <Form.Group controlId="locationType">
+              <Form.Label>Location Type</Form.Label>
+              <Form.Control
+                type="text"
+                placeholder="Enter location type"
+                name='locationType'
+                onChange={handleInputChange}
+              />
+            </Form.Group>
+            <Form.Group controlId="videoUrl">
+              <Form.Label>Video Url</Form.Label>
+              <Form.Control
+                type="text"
+                placeholder="Enter video url"
+                name='videoUrl'
                 onChange={handleInputChange}
               />
             </Form.Group>
