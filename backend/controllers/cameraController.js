@@ -10,8 +10,8 @@ const getCameras = async (req, res, next) => {
         let result = [];
         for(let camera of cameras) {
             let data = JSON.parse(JSON.stringify(camera));
-            data.alerts = alerts.filter(alert => alert.cameraId.toString() === camera._id.toString());
-            let building = buildings.find(building => building._id.toString() === camera.buildingId.toString());
+            data.alerts = alerts.filter(alert => alert.cameraId?.toString() === camera._id?.toString());
+            let building = buildings.find(building => building?._id?.toString() === camera?.buildingId?.toString());
             data.buildingName = building?.name;
             result.push(data);
           }
