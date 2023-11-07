@@ -17,10 +17,14 @@ const getNames = async (req, res, next) => {
 const getBuildings = async (req, res, next) => {
   try {
     const buildings = await Building.find();
+    const cameras = await Camera.find();
+    let result = [];
     for(let building of buildings) {
-      building.cameras = await Camera.find({buildingId: building._id});
+      let data = JSON.parse(JSON.stringify(building));
+      data.cameras = cameras.filter(camera => camera.buildingId?.toString() === building._id?.toString());
+      result.push(data);
     }
-    res.status(200).json({ buildings });
+    res.status(200).json({ buildings: result });
   } catch (error) {
     next(error);
   }

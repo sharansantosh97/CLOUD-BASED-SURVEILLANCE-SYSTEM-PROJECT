@@ -25,11 +25,12 @@ const buildingSchema = new mongoose.Schema({
     type: mongoose.Schema.Types.ObjectId,
     ref: 'Campus',
     required: true
-  },
-  cameras: [{
-    type: mongoose.Schema.Types.ObjectId,
-    ref: 'Camera'
-  }]
+  }
+  // ,
+  // cameras: [{
+  //   type: mongoose.Schema.Types.ObjectId,
+  //   ref: 'Camera'
+  // }]
 });
 
 const Building = mongoose.model('Building', buildingSchema);
