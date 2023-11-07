@@ -36,43 +36,43 @@ function Home() {
   };
 
 
-  // const buildings1 = 
-  // [
-  //   {
-  //     id: 1,
-  //     name: "Campus",
-  //     cameras: [
-  //       {
-  //         id: 1,
-  //         name: "Building 1",
-  //         operationStatus: "Online",
-  //         healthStatus: "Good",
-  //         location: [50, 50],
-  //       },
-  //       {
-  //         id: 2,
-  //         name: "Building 2",
-  //         operationStatus: "Online",
-  //         healthStatus: "Excellent",
-  //         location: [30, 40],
-  //       },
-  //       {
-  //         id: 3,
-  //         name: "Building 3",
-  //         operationStatus: "Offline",
-  //         healthStatus: "Needs Maintenance",
-  //         location: [40, 30],
-  //       },
-  //       {
-  //         id: 4,
-  //         name: "Building 4",
-  //         operationStatus: "Online",
-  //         healthStatus: "Fair",
-  //         location: [60, 40],
-  //       },
-  //     ],
-  //   },
-  // ]
+  const buildings1 = 
+  [
+    {
+      id: "64407a6155d5e66f8b5a69b8",
+      name: "Campus",
+      cameras: [
+        {
+          id: 1,
+          name: "Building 1",
+          operationStatus: "Online",
+          healthStatus: "Good",
+          location: [50, 50],
+        },
+        {
+          id: 2,
+          name: "Building 2",
+          operationStatus: "Online",
+          healthStatus: "Excellent",
+          location: [30, 40],
+        },
+        {
+          id: 3,
+          name: "Building 3",
+          operationStatus: "Offline",
+          healthStatus: "Needs Maintenance",
+          location: [40, 30],
+        },
+        {
+          id: 4,
+          name: "Building 4",
+          operationStatus: "Online",
+          healthStatus: "Fair",
+          location: [60, 40],
+        },
+      ],
+    },
+  ]
 
   const getOperationStatusColor = (status) => {
     if (status === "Online") {
@@ -205,11 +205,11 @@ function Home() {
                       alt='Map'
                       className='map-image'
                     />
-                    {buildings.map((building) => (
+                    {buildings1.map((building) => (
                       <div key={building._id} className='building-markers'>
                         {building?.cameras?.map((camera) => (
                           <Link
-                            to='/floormap'
+                            to={`/floormap/${building.id}`}
                             key={camera._id}
                             className={`camera-marker text-${getOperationStatusColor(
                               camera.operationStatus

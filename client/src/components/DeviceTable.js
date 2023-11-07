@@ -83,7 +83,6 @@ function DeviceTable() {
     <Button variant="primary" onClick={handleShowAddModal}>
         Add Camera
       </Button>
-
       <Modal show={showAddModal} onHide={handleCloseAddModal}>
         <Modal.Header closeButton>
           <Modal.Title>Add Camera</Modal.Title>

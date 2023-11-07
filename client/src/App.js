@@ -60,7 +60,7 @@ function App() {
 
           <Route path='/invoice' element={<Invoice />}></Route>
           <Route path='/adminDashboard' element={<AdminDashboard />}></Route>
-          <Route path='/floormap' element={<FloorMap />}></Route>
+          <Route path='/floormap/:buildingId' element={<FloorMap />}></Route>
           <Route path='/addUser' element={<AddUser />}></Route>
           <Route path='/viewAllUsers' element={<ViewAllUsers />}>
             {" "}

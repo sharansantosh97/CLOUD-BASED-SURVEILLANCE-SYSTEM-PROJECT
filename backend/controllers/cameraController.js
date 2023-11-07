@@ -30,6 +30,9 @@ const getCamerasByFilters = async (req, res, next) => {
         if (req.query.cameraId) {
             query.cameraId = Number(req.query.cameraId);
         }
+        if (req.query.buildingId) {
+            query.buildingId = req.query.buildingId;
+        }
         const cameras = await Camera.find(query);
         res.status(200).json({ cameras });
     } catch (error) {
@@ -69,10 +72,10 @@ const updateCamera = async (req, res, next) => {
 
 const deleteCamera = async (req, res, next) => {
     try {
-        const camera = await Camera.findOne({ cameraId: req.params.cameraId });
+        const camera = await Camera.findOne({ _id: req.params.id });
         if (camera) {
-            await camera.remove();
-            res.status(200).json({ message: 'Camera deleted' });
+            const cameraDeleted = await Camera.deleteOne({ _id: req.params.id });
+            res.status(200).json(cameraDeleted);
         } else {
             res.status(404).json({ message: 'Camera not found' });
         }
