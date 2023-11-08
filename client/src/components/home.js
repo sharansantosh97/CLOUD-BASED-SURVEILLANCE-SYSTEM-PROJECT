@@ -208,8 +208,8 @@ function Home() {
                     {buildings1.map((building) => (
                       <div key={building._id} className='building-markers'>
                         {building?.cameras?.map((camera) => {
-                          const leftPercentage = `${camera.location[0]}%`;
-                          const topPer = 300 - camera.location[1];
+                          const leftPercentage = `${camera.location[0]%50 + 30}%`;
+                          const topPer = camera.location[1] %100 + 240;
                           const topPercentage = `${topPer}px`;
                           return (<Link
                             to={`/floormap/${building.id}`}
