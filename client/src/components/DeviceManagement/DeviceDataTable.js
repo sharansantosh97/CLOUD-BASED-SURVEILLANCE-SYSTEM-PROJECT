@@ -70,6 +70,10 @@ function DeviceDataTable() {
                   {/* Add more camera type options as needed */}
                 </Form.Control>
               </Form.Group>
+            </Form>
+          </Col>
+          <Col>
+            <Form>
               <Form.Group>
                 <Form.Label>Filter by Resolution:</Form.Label>
                 <Form.Control
@@ -84,9 +88,9 @@ function DeviceDataTable() {
                   {/* Add more resolution options as needed */}
                 </Form.Control>
               </Form.Group>
-              <Button variant="primary" onClick={fetchCameras}>
+              {/* <Button variant="primary" onClick={fetchCameras}>
                 Apply Filters
-              </Button>
+              </Button> */}
             </Form>
           </Col>
         </Row>

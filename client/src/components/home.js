@@ -47,28 +47,28 @@ function Home() {
           name: "Building 1",
           operationStatus: "Online",
           healthStatus: "Good",
-          location: [50, 50],
+          location: [50, 100],
         },
         {
           id: 2,
           name: "Building 2",
           operationStatus: "Online",
           healthStatus: "Excellent",
-          location: [30, 40],
+          location: [30, 80],
         },
         {
           id: 3,
           name: "Building 3",
           operationStatus: "Offline",
           healthStatus: "Needs Maintenance",
-          location: [40, 30],
+          location: [40, 120],
         },
         {
           id: 4,
           name: "Building 4",
           operationStatus: "Online",
           healthStatus: "Fair",
-          location: [60, 40],
+          location: [60, 60],
         },
       ],
     },
@@ -198,7 +198,7 @@ function Home() {
                   </Col>
                 </Row>
                 <Row>
-                  <Col sm={8}>
+                  <Col sm={8} style={{ position: 'relative' }}>
                     <img
                       src={mapImage}
                       style={{ opacity: 0.6 }}
@@ -207,22 +207,26 @@ function Home() {
                     />
                     {buildings1.map((building) => (
                       <div key={building._id} className='building-markers'>
-                        {building?.cameras?.map((camera) => (
-                          <Link
+                        {building?.cameras?.map((camera) => {
+                          const leftPercentage = `${camera.location[0]}%`;
+                          const topPer = 300 - camera.location[1];
+                          const topPercentage = `${topPer}px`;
+                          return (<Link
                             to={`/floormap/${building.id}`}
                             key={camera._id}
                             className={`camera-marker text-${getOperationStatusColor(
                               camera.operationStatus
                             )} `}
                             style={{
-                              left: `${camera.location[0]}%`,
-                              top: `${camera.location[1]}%`,
+                              position: 'absolute',
+                              left: leftPercentage,
+                              top: topPercentage,
                               backgroundColor: "#eee"
                             }}
                           >
                             {camera.name}
-                          </Link>
-                        ))}
+                          </Link>)
+})}
                       </div>
                     ))}
                   </Col>
