@@ -7,3 +7,14 @@ html {
       'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
       sans-serif; */
 }
+
+
+@keyframes blink {
+  0% { visibility: visible; }
+  50% { visibility: hidden; }
+  100% { visibility: visible; }
+}
+
+.blinking {
+  animation: blink 1s linear infinite;
+}

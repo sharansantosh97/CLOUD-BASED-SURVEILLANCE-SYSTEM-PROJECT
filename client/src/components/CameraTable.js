@@ -1,135 +1,76 @@
-import React, { useState, useEffect } from "react"
-import Table from 'react-bootstrap/Table';
-import { Link } from "react-router-dom"
-
-  
-
+import React, { useState } from 'react';
+import { DataTable } from 'primereact/datatable';
+import { Column } from 'primereact/column';
+import { Paginator } from 'primereact/paginator';
 
 const CameraTable = (props) => {
-  const getOperationStatusColor = (status) => {
-    if (status === "Online") {
-      return "success"
-    } else if (status === "Offline") {
-      return "danger"
-    } else {
-      return "warning"
-    }
-  }
+  const [globalFilter, setGlobalFilter] = useState('');
+  const [first, setFirst] = useState(0);
+  const [rows, setRows] = useState(10);
 
-  console.log("CameraTable props: ", props.cameras)
+  const operationStatusBodyTemplate = (rowData) => {
+    const color = rowData.operationStatus === 'Online' ? 'green' : 'red';
+    return (
+      <span style={{ color }}>
+        {rowData.operationStatus}
+      </span>
+    );
+  };
 
-    // const cameras = [
-    //     {
-    //       id: 1,
-    //       camera_name: 'Camera 1',
-    //       operation_status: 'Online',
-    //       health_status: 'Healthy',
-    //       building_name: 'SREC',
-    //     },
-    //     {
-    //       id: 2,
-    //       camera_name: 'Camera 2',
-    //       operation_status: 'Offline',
-    //       health_status: 'Unhealthy',
-    //       building_name: 'Student Union',
-    //     },
-    //     {
-    //       id: 3,
-    //       camera_name: 'Camera 3',
-    //       operation_status: 'Online',
-    //       health_status: 'Healthy',
-    //       building_name: 'Martin Luther King Library',
-    //     },
-    //     {
-    //       id: 4,
-    //       camera_name: 'Camera 4',
-    //       operation_status: 'Offline',
-    //       health_status: 'Unhealthy',
-    //       building_name: 'Clark Building',
-    //     },
-    //     {
-    //       id: 5,
-    //       camera_name: 'Camera 5',
-    //       operation_status: 'Online',
-    //       health_status: 'Healthy',
-    //       building_name: 'Spartan Complex',
-    //     },
-    //     {
-    //       id: 6,
-    //       camera_name: 'Camera 6',
-    //       operation_status: 'Online',
-    //       health_status: 'Unhealthy',
-    //       building_name: 'MacQuarrie Hall',
-    //     },
-    //     {
-    //       id: 7,
-    //       camera_name: 'Camera 7',
-    //       operation_status: 'Offline',
-    //       health_status: 'Healthy',
-    //       building_name: 'Duncan Hall',
-    //     },
-    //     {
-    //       id: 8,
-    //       camera_name: 'Camera 8',
-    //       operation_status: 'Online',
-    //       health_status: 'Healthy',
-    //       building_name: 'Engineering Building',
-    //     },
-    //     {
-    //       id: 9,
-    //       camera_name: 'Camera 9',
-    //       operation_status: 'Offline',
-    //       health_status: 'Unhealthy',
-    //       building_name: 'Business Tower',
-    //     },
-    //     {
-    //       id: 10,
-    //       camera_name: 'Camera 10',
-    //       operation_status: 'Online',
-    //       health_status: 'Healthy',
-    //       building_name: 'Joe west Hall',
-    //     },
-    //   ];
-      
-      
-  return (
-    <Table striped bordered hover style={{marginTop:100}}>
-      <thead>
-        <tr>
-          <th>Name</th>
-          <th>Type</th>
-          <th>Health</th>
-          <th>Building</th>
-          <th>Location Type</th>
-          <th>Storage</th>
-          <th>Alerts</th>
-        </tr>
-      </thead>
-      <tbody>
-        {props.cameras.map((camera) => (
-          <tr key={camera._id}>
-              
-            <td>
-            <Link
-                to='/cameravideo'
-                key={camera._id}
-                className=""
-               
-              >
-                {camera.name}
-              </Link>
-  
-             </td>
-             <td>{camera.cameraType}</td>
-            <td>{camera.healthStatus}</td>
-            <td>{camera.buildingName}</td>
-            <td>{camera.locationType}</td>
-            <td>{camera.dataStorage}</td>
-            <td>{camera?.alerts?.map((alert) => alert?.name)}</td>
-          </tr>
+  const healthStatusBodyTemplate = (rowData) => {
+    const color = rowData.healthStatus === 'Active' ? 'green' : 'red';
+    return (
+      <span style={{ color }}>
+        {rowData.healthStatus}
+      </span>
+    );
+  };
+
+  const alertsBodyTemplate = (rowData) => {
+    return (
+      <ul>
+        {rowData.alerts.map((alert, index) => (
+          <li key={index}>{alert.name}</li>
         ))}
-      </tbody>
-    </Table>
+      </ul>
+    );
+  };
+
+  const header = (
+    <div>
+      <h1>Camera Table</h1>
+    </div>
   );
-}
+
+  const onPageChange = (event) => {
+    setFirst(event.first);
+    setRows(event.rows);
+  };
+
+  const filterHeader = (
+    <input
+      type="text"
+      className="p-inputtext p-component"
+      placeholder="Search"
+      onChange={(e) => setGlobalFilter(e.target.value)}
+    />
+  );
+
+  return (
+    <div className="datatable">
+      <DataTable value={props.cameras} header={header} globalFilter={globalFilter} first={first} rows={rows}
+        onPage={onPageChange} paginator rowsPerPageOptions={[5, 10, 20]}>
+        <Column field="name" header="Name" filter filterPlaceholder="Search by name" filterMatchMode="contains" filterHeader={filterHeader} />
+        <Column field="cameraType" header="Type" filter filterPlaceholder="Search by type" filterMatchMode="contains" filterHeader={filterHeader} />
+        <Column field="healthStatus" header="Health" body={healthStatusBodyTemplate} filter filterPlaceholder="Search by health" filterMatchMode="contains" filterHeader={filterHeader} />
+        <Column field="buildingName" header="Building" filter filterPlaceholder="Search by building" filterMatchMode="contains" filterHeader={filterHeader} />
+        <Column field="locationType" header="Location Type" filter filterPlaceholder="Search by location type" filterMatchMode="contains" filterHeader={filterHeader} />
+        <Column field="dataStorage" header="Storage" filter filterPlaceholder="Search by storage" filterMatchMode="contains" filterHeader={filterHeader} />
+        <Column field="operationStatus" header="Operation Status" body={operationStatusBodyTemplate} filter filterPlaceholder="Search by operation status" filterMatchMode="contains" filterHeader={filterHeader} />
+        <Column field="alerts" header="Alerts" body={alertsBodyTemplate} filter filterPlaceholder="Search by alerts" filterMatchMode="contains" filterHeader={filterHeader} />
+      </DataTable>
+    </div>
+  );
+};
+
 export default CameraTable;
