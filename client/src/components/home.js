@@ -3,6 +3,7 @@ import { Container, Row, Col, Card } from "react-bootstrap"
 // import LeftNavBarAdmin from "./LeftNavBarAdmin/LeftNavBarAdmin"
 import axios from "axios"
 import React, { useState, useEffect } from "react"
+import { FaVideo } from 'react-icons/fa';
 
 // import NavBarLoggedInAdmin from "./NavbarAdmin/NavBarLoggedInAdmin"
 // import "./AddUser.css"
@@ -218,12 +219,14 @@ function Home() {
                               camera.operationStatus
                             )} `}
                             style={{
+                              fontSize: "17px",
                               position: 'absolute',
                               left: leftPercentage,
                               top: topPercentage,
                               backgroundColor: "#eee"
                             }}
                           >
+                           <FaVideo style={{ marginRight: '1px' }} />
                             {camera.name}
                           </Link>)
 })}

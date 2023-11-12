@@ -15,6 +15,8 @@
     "bootstrap-switch-button-react": "^1.2.0",
     "mdb-react-ui-kit": "^6.0.0",
     "next": "^13.0.3",
+    "primeicons": "^6.0.1",
+    "primereact": "^10.0.9",
     "react": "^18.2.0",
     "react-bootstrap": "^2.6.0",
     "react-bootstrap-sidebar-menu": "^2.0.3",

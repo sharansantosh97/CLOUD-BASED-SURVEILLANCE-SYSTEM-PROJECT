@@ -1,15 +1,22 @@
 import React, { useState, useEffect } from "react";
-import { Container, Row, Col, Table, Form, Button } from "react-bootstrap";
+import { Container, Row, Col, Form } from "react-bootstrap";
+import { DataTable } from "primereact/datatable";
+import { Column } from "primereact/column";
+import { Dropdown } from "primereact/dropdown";
+import "primereact/resources/themes/saga-blue/theme.css";
+import "primereact/resources/primereact.min.css";
+import "primeicons/primeicons.css";
 import BootstrapSwitchButton from "bootstrap-switch-button-react";
 import axios from "axios";
-import DeviceTable from "../DeviceTable";
+import { Link } from 'react-router-dom';
+import { Button } from 'react-bootstrap';
 
 function DeviceDataTable() {
   const baseURL = process.env.REACT_APP_BACKEND_URL;
 
   const [cameras, setCameras] = useState([]);
-  const [cameraTypeFilter, setCameraTypeFilter] = useState("");
-  const [resolutionFilter, setResolutionFilter] = useState("");
+  const [cameraTypeFilter, setCameraTypeFilter] = useState(null);
+  const [resolutionFilter, setResolutionFilter] = useState(null);
 
   useEffect(() => {
     fetchCameras();
@@ -28,138 +35,69 @@ function DeviceDataTable() {
       });
   };
 
-  const handleSwitchChange = (cameraId) => {
-    const updatedCameras = cameras.map((camera) => {
-      if (camera.id === cameraId) {
-        return { ...camera, isActive: !camera.isActive };
-      }
-      return camera;
-    });
-    setCameras(updatedCameras);
-  };
+  const cameraTypeOptions = [
+    { label: "All", value: null },
+    { label: "DSLR", value: "DSLR" },
+    { label: "Semi Rotating", value: "Semi Rotating" },
+    // Add more camera type options as needed
+  ];
 
-  const filterCameras = () => {
-    return cameras.filter((camera) => {
-      if (cameraTypeFilter && camera.cameraType !== cameraTypeFilter) {
-        return false;
-      }
-      if (resolutionFilter && camera.resolution !== resolutionFilter) {
-        return false;
-      }
-      return true;
-    });
-  };
+  const resolutionOptions = [
+    { label: "All", value: null },
+    { label: "1080p", value: "1080p" },
+    { label: "720p", value: "720p" },
+    { label: "4k", value: "4k" },
+    // Add more resolution options as needed
+  ];
+
+  const operationStatusTemplate = (rowData) => (
+    <BootstrapSwitchButton
+      type="checkbox"
+      checked={rowData.operationStatus?.toLowerCase() === "online"}
+      onChange={() => {}}
+    />
+  );
+
+  const actionsTemplate = (rowData) => (
+    <span>
+      <a href={rowData.videoUrl} className="button-link" target="_blank">
+        View
+      </a>{" "}
+      <br />
+      <a href={rowData.videoUrl} className="button-link" target="_blank">
+        Add
+      </a>{" "}
+      <a href={rowData.videoUrl} className="button-link" target="_blank">
+        Update
+      </a>{" "}
+      <a href={rowData.videoUrl} className="button-link" target="_blank">
+        Delete
+      </a>
+    </span>
+  );
 
   return (
-    <>
-      <DeviceTable></DeviceTable>
-      <Container>
-        <Row>
-          <Col>
-            <Form>
-              <Form.Group>
-                <Form.Label>Filter by Camera Type:</Form.Label>
-                <Form.Control
-                  as="select"
-                  onChange={(e) => setCameraTypeFilter(e.target.value)}
-                  value={cameraTypeFilter}
-                >
-                  <option value="">All</option>
-                  <option value="DSLR">DSLR</option>
-                  <option value="Semi Rotating">Semi Rotating</option>
-                  {/* Add more camera type options as needed */}
-                </Form.Control>
-              </Form.Group>
-            </Form>
-          </Col>
-          <Col>
-            <Form>
-              <Form.Group>
-                <Form.Label>Filter by Resolution:</Form.Label>
-                <Form.Control
-                  as="select"
-                  onChange={(e) => setResolutionFilter(e.target.value)}
-                  value={resolutionFilter}
-                >
-                  <option value="">All</option>
-                  <option value="1080p">1080p</option>
-                  <option value="720p">720p</option>
-                  <option value="4k">4k</option>
-                  {/* Add more resolution options as needed */}
-                </Form.Control>
-              </Form.Group>
-              {/* <Button variant="primary" onClick={fetchCameras}>
-                Apply Filters
-              </Button> */}
-            </Form>
-          </Col>
-        </Row>
-        <Row>
-          <Col>
-            <Table striped bordered hover>
-              <thead>
-                <tr>
-                  <th>Camera Name</th>
-                  <th>Type</th>
-                  <th>Health</th>
-                  <th>Resolution</th>
-                  <th>Storage Location</th>
-                  <th>Operation Status</th>
-                  <th>Building</th>
-                  <th>Location Type</th>
-                  <th>Storage</th>
-                  <th>Actions</th>
-                  <th>Modes</th>
-                </tr>
-              </thead>
-              <tbody>
-                {filterCameras().map((camera) => (
-                  <tr key={camera._id}>
-                    <td>{camera.name}</td>
-                    <td>{camera.cameraType}</td>
-                    <td>{camera.healthStatus}</td>
-                    <td>{camera.resolution}</td>
-                    <td>{camera.dataStorage}</td>
-                    <td>{camera.operationStatus}</td>
-                    <td>{camera.buildingName}</td>
-                    <td>{camera.locationType}</td>
-                    <td>{camera.dataStorage}</td>
-                    <td>
-                      <BootstrapSwitchButton
-                        type="checkbox"
-                        checked={
-                          camera.operationStatus?.toLowerCase() == "online"
-                            ? true
-                            : false
-                        }
-                        onChange={() => {
-                          camera.action = !camera.isActive;
-                        }}
-                      />
-                    </td>
-                    <td>
-                      <a href="{camera.videoUrl}" className="button-link" target="_blank">
-                        View
-                      </a>{" "}
-                      <br />
-                      <a href="{camera.videoUrl}" className="button-link" target="_blank">
-                        Add
-                      </a>
-                      <a href="{camera.videoUrl}" className="button-link" target="_blank">
-                        Update
-                      </a>
-                      <a href="{camera.videoUrl}" className="button-link" target="_blank">
-                        Delete
-                      </a>
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </Table>
-          </Col>
-        </Row>
-      </Container>
-    </>
+    <Container>
+      <Link to="/controlConfigure">
+        <Button variant="primary">Go to Control Configure</Button>
+      </Link>
+      <Row>
+      <Col>
+          <DataTable value={cameras} paginator rows={10}>
+            <Column field="name" header="Camera Name" filter filterPlaceholder="Search by name" />
+            <Column field="cameraType" header="Type" filter filterPlaceholder="Search by type" />
+            <Column field="healthStatus" header="Health" filter filterPlaceholder="Search by health" />
+            <Column field="resolution" header="Resolution" filter filterPlaceholder="Search by resolution" />
+            <Column field="dataStorage" header="Storage Location" filter filterPlaceholder="Search by storage location" />
+            <Column field="operationStatus" header="Operation Status" filter filterPlaceholder="Search by operation status" />
+            <Column field="buildingName" header="Building" filter filterPlaceholder="Search by building" />
+            <Column field="locationType" header="Location Type" filter filterPlaceholder="Search by location type" />
+            <Column field="dataStorage" header="Storage" filter filterPlaceholder="Search by storage" />
+            <Column body={actionsTemplate} header="Actions" filter={false} />
+          </DataTable>
+        </Col>
+      </Row>
+    </Container>
   );
 }
 
