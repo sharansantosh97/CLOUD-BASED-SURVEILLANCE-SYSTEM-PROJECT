@@ -201,7 +201,95 @@ function FloorMap() {
           </div>
         </Col>
       </Row>
-      {/* Modal component remains the same */}
+      <Modal show={showAddModal} onHide={handleCloseAddModal}>
+        <Modal.Header closeButton>
+          <Modal.Title>Add Camera</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <Form>
+            <Form.Group controlId="name">
+              <Form.Label>Name</Form.Label>
+              <Form.Control
+                type="text"
+                placeholder="Enter name"
+                name="name"
+                onChange={handleInputChange}
+              />
+            </Form.Group>
+            <Form.Group controlId="cameraType">
+              <Form.Label>Camera Type</Form.Label>
+              <Form.Control
+                type="text"
+                placeholder="Enter camera type"
+                name="cameraType"
+                onChange={handleInputChange}
+              />
+            </Form.Group>
+            <Form.Group controlId="resolution">
+              <Form.Label>Resolution</Form.Label>
+              <Form.Control
+                type="text"
+                placeholder="Enter resolution"
+                name="resolution"
+                onChange={handleInputChange}
+              />
+            </Form.Group>
+            <Form.Group controlId="location">
+              <Form.Label>Location</Form.Label>
+              <Form.Control
+                type="text"
+                placeholder="Enter location"
+                name="location"
+                onChange={handleInputChange}
+              />
+            </Form.Group>
+            <Form.Group controlId="timeframe">
+              <Form.Label>Time Frame</Form.Label>
+              <Form.Control
+                type="text"
+                placeholder="Enter time frame for the video capture"
+                name="timeframe"
+                onChange={handleInputChange}
+              />
+            </Form.Group>
+            <Form.Group controlId="dataStorage">
+              <Form.Label>Data Storage</Form.Label>
+              <Form.Control
+                type="text"
+                placeholder="Enter data storage location"
+                name="dataStorage"
+                onChange={handleInputChange}
+              />
+            </Form.Group>
+            <Form.Group controlId="locationType">
+              <Form.Label>Location Type</Form.Label>
+              <Form.Control
+                type="text"
+                placeholder="Enter location type"
+                name="locationType"
+                onChange={handleInputChange}
+              />
+            </Form.Group>
+            <Form.Group controlId="videoUrl">
+              <Form.Label>Video Url</Form.Label>
+              <Form.Control
+                type="text"
+                placeholder="Enter video url"
+                name="videoUrl"
+                onChange={handleInputChange}
+              />
+            </Form.Group>
+          </Form>
+        </Modal.Body>
+        <Modal.Footer>
+          <Button variant="secondary" onClick={handleCloseAddModal}>
+            Close
+          </Button>
+          <Button variant="primary" onClick={handleAddRecord}>
+            Add Record
+          </Button>
+        </Modal.Footer>
+      </Modal>
     </>
   );
 }
