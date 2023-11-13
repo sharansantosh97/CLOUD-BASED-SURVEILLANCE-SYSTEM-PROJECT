@@ -36,6 +36,17 @@ function Home() {
         console.log("error: ", error);
       });
   };
+  const [zoomLevel, setZoomLevel] = useState(1); // State to control the zoom level
+
+  const handleZoomIn = () => {
+    setZoomLevel((prevZoom) => prevZoom + 0.1); // Increase the zoom level
+  };
+
+  const handleZoomOut = () => {
+    if (zoomLevel > 0.2) {
+      setZoomLevel((prevZoom) => prevZoom - 0.1); // Decrease the zoom level, limiting to a minimum of 20%
+    }
+  };
 
   const buildings1 = [
     {
@@ -243,12 +254,15 @@ function Home() {
                 </Row>
                 <Row>
                   <Col sm={8} style={{ position: "relative" }}>
-                    <img
-                      src={mapImage}
-                      style={{ opacity: 0.6 }}
-                      alt="Map"
-                      className="map-image"
-                    />
+                  <img
+            src={mapImage}
+            alt="Map"
+            className="map-image"
+            style={{
+              opacity: 0.6,
+              transform: `scale(${zoomLevel})`, // Apply the scale transformation based on the zoom level
+            }}
+          />
                     {buildings1.map((building) => (
                       <div key={building._id} className="building-markers">
                         {building?.cameras?.map((camera) => {
@@ -318,6 +332,11 @@ function Home() {
                   </Col>
                   ;
                 </Row>
+                <div>
+        {/* Add buttons to control zoom */}
+        <button onClick={handleZoomIn}>Zoom In</button>
+        <button onClick={handleZoomOut}>Zoom Out</button>
+      </div>
               </Container>
             </div>
           </div>
