@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { FaVideo } from 'react-icons/fa';
 import axios from 'axios';
 import floorImage from "./floor.jpeg";
+import { FaExclamationTriangle } from 'react-icons/fa';
 
 const MapComponent = ({ buildingId }) => {
   const [cameras, setCameras] = useState([]);
@@ -45,34 +46,36 @@ const MapComponent = ({ buildingId }) => {
     <div style={{ position: 'relative' }}>
       {/* Your map rendering code */}
       <img
-        src={floorImage}
-        style={{ opacity: 0.6, width: '100%', height: 'auto' }} /* Ensure the map fits properly */
-        alt="Map"
-        className="map-image"
-      />
-      <div className="building-markers" style={{ position: 'absolute', top: 0, left: 0 }}>
-        {cameras.map((camera) => (
-          <Link
-            to="/cameravideo"
-            key={camera.id}
-            className={`camera-marker ${
-              camera.operationStatus?.toLowerCase() === 'offline' ? 'blinking' : ''
-            } text-${getOperationStatusColor(camera.operationStatus)} bg-dark`}
-            style={{
-              position: 'absolute',
-              left: `${camera.location[0]}%`,
-              top: `${camera.location[1]}%`,
-            }}
-          >
-            {camera.operationStatus?.toLowerCase() === 'offline' ? (
-              <FaVideo style={{ marginRight: '5px', color: 'red' }} />
-            ) : (
-              <FaVideo style={{ marginRight: '5px' }} />
-            )}
-            {limitCameraName(camera.name)}
-          </Link>
-        ))}
-      </div>
+                      src={floorImage}
+                      style={{ opacity: 0.6 }}
+                      alt="Map"
+                      className="map-image"
+                    />
+                    <div className="building-markers">
+                      {cameras.map((camera) => (
+                        <Link
+                          to="/cameravideo"
+                          key={camera._id}
+                          className={`camera-marker ${
+                            camera.operationStatus?.toLowerCase() === "offline" ? "blinking" : ""
+                          } text-${getOperationStatusColor(camera.operationStatus)} bg-dark`}
+                          style={{
+                            left: `${camera.location[0]}%`,
+                            top: `${camera.location[1]}%`,
+                          }}
+                        >
+                          {camera.operationStatus?.toLowerCase() === "offline" ? (
+                            <>
+                              <FaExclamationTriangle style={{ marginRight: '5px', color: 'red' }} />
+                              <FaVideo style={{ marginRight: '5px', color: 'red' }} />
+                            </>
+                          ) : (
+                            <FaVideo style={{ marginRight: '5px' }} />
+                          )}
+                          {limitCameraName(camera.name)}
+                        </Link>
+                      ))}
+                    </div>
     </div>
   );
 };

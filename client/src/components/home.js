@@ -66,13 +66,57 @@ function Home() {
         {
           id: 4,
           name: "Building 4",
-          operationStatus: "Online",
+          operationStatus: "offline",
           healthStatus: "Fair",
           location: [60, 60],
+        },
+        // Adding 6 more buildings below
+        {
+          id: 5,
+          name: "Building 5",
+          operationStatus: "Online",
+          healthStatus: "Good",
+          location: [70, 50],
+        },
+        {
+          id: 6,
+          name: "Building 6",
+          operationStatus: "Online",
+          healthStatus: "Excellent",
+          location: [80, 20],
+        },
+        {
+          id: 7,
+          name: "Building 7",
+          operationStatus: "Offline",
+          healthStatus: "Needs Maintenance",
+          location: [90, 90],
+        },
+        {
+          id: 8,
+          name: "Building 8",
+          operationStatus: "offline",
+          healthStatus: "Fair",
+          location: [120, 40],
+        },
+        {
+          id: 9,
+          name: "Building 9",
+          operationStatus: "Online",
+          healthStatus: "Excellent",
+          location: [110, 70],
+        },
+        {
+          id: 10,
+          name: "Building 10",
+          operationStatus: "Online",
+          healthStatus: "Good",
+          location: [85, 105],
         },
       ],
     },
   ];
+  
 
   const getOperationStatusColor = (status) => {
     if (status === "Online") {

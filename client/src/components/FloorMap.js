@@ -10,6 +10,7 @@ import "./CampusViewPage.css";
 import { Link } from "react-router-dom";
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
+import MapComponent from "./Map";
 
 function FloorMap() {
   const baseURL = process.env.REACT_APP_BACKEND_URL;
@@ -148,37 +149,7 @@ function FloorMap() {
                 </Row>
                 <Row>
                   <Col sm={8}>
-                    <img
-                      src={floorImage}
-                      style={{ opacity: 0.6 }}
-                      alt="Map"
-                      className="map-image"
-                    />
-                    <div className="building-markers">
-                      {cameras.map((camera) => (
-                        <Link
-                          to="/cameravideo"
-                          key={camera.id}
-                          className={`camera-marker ${
-                            camera.operationStatus?.toLowerCase() === "Offline" ? "blinking" : ""
-                          } text-${getOperationStatusColor(camera.operationStatus)} bg-dark`}
-                          style={{
-                            left: `${camera.location[0]}%`,
-                            top: `${camera.location[1]}%`,
-                          }}
-                        >
-                          {camera.operationStatus?.toLowerCase() === "Offline" ? (
-                            <>
-                              <FaExclamationTriangle style={{ marginRight: '5px', color: 'red' }} />
-                              <FaVideo style={{ marginRight: '5px', color: 'red' }} />
-                            </>
-                          ) : (
-                            <FaVideo style={{ marginRight: '5px' }} />
-                          )}
-                          {limitCameraName(camera.name)}
-                        </Link>
-                      ))}
-                    </div>
+                 <MapComponent buildingId={buildingId}/>
                   </Col>
                   <Col>
                     <Button variant="primary" onClick={handleShowAddModal}>
@@ -224,6 +195,7 @@ function FloorMap() {
                     </Table>
                   </Col>
                 </Row>
+               
               </Container>
             </div>
           </div>
