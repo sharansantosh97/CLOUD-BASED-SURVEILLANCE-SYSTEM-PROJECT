@@ -22,12 +22,10 @@ const ControlConfigure = () => {
           <LeftNavBar />{" "}
         </Col>
 
-        <Col lg={7}>
+        <Col >
           <ControlTable></ControlTable>
         </Col>
-        <Col lg={3}>
-          <MapComponent></MapComponent>
-        </Col>
+       
       </Row>
     </>
   );

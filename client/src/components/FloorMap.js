@@ -166,7 +166,7 @@ function FloorMap() {
                           <tr key={camera._id}>
                             <td>
                               <Link
-                                to="/cameravideo"
+                                to="/cameravideo?indoor=true"
                                 key={camera._id}
                                 className=""
                               >

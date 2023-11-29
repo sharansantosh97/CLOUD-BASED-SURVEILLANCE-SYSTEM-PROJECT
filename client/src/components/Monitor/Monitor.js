@@ -46,12 +46,10 @@ const Monitor = () => {
               Monitor and Tracking
             </h3>
             <Row>
-              <Col lg={7}>
+              <Col>
                 <CameraTable cameras={cameras} />
               </Col>
-              <Col lg={4}>
-                <MapComponent />
-              </Col>
+             
             </Row>
           </Container>
         </Col>

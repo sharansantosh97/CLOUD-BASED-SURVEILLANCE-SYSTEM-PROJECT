@@ -4,6 +4,7 @@ import { FaVideo } from 'react-icons/fa';
 import axios from 'axios';
 import floorImage from "./floor.jpeg";
 import { FaExclamationTriangle } from 'react-icons/fa';
+import ImageWithIcons from './ImagewithCamera';
 
 const MapComponent = ({ buildingId }) => {
   const [cameras, setCameras] = useState([]);
@@ -43,40 +44,42 @@ const MapComponent = ({ buildingId }) => {
   };
 
   return (
-    <div style={{ position: 'relative' }}>
-      {/* Your map rendering code */}
-      <img
-                      src={floorImage}
-                      style={{ opacity: 0.6 }}
-                      alt="Map"
-                      className="map-image"
-                    />
-                    <div className="building-markers">
-                      {cameras.map((camera) => (
-                        <Link
-                          to="/cameravideo"
-                          key={camera._id}
-                          className={`camera-marker ${
-                            camera.operationStatus?.toLowerCase() === "offline" ? "blinking" : ""
-                          } text-${getOperationStatusColor(camera.operationStatus)} bg-dark`}
-                          style={{
-                            left: `${camera.location[0]}%`,
-                            top: `${camera.location[1]}%`,
-                          }}
-                        >
-                          {camera.operationStatus?.toLowerCase() === "offline" ? (
-                            <>
-                              <FaExclamationTriangle style={{ marginRight: '5px', color: 'red' }} />
-                              <FaVideo style={{ marginRight: '5px', color: 'red' }} />
-                            </>
-                          ) : (
-                            <FaVideo style={{ marginRight: '5px' }} />
-                          )}
-                          {limitCameraName(camera.name)}
-                        </Link>
-                      ))}
-                    </div>
-    </div>
+    <ImageWithIcons imageUrl={floorImage} indoor={false} scale={0.9 } />
+    // <div style={{ position: 'relative' }}>
+    //   {/* Your map rendering code */}
+   
+    //   <img
+    //                   src={floorImage}
+    //                   style={{ opacity: 0.6 }}
+    //                   alt="Map"
+    //                   className="map-image"
+    //                 />
+    //                 <div className="building-markers">
+    //                   {cameras.map((camera) => (
+    //                     <Link
+    //                       to="/cameravideo"
+    //                       key={camera._id}
+    //                       className={`camera-marker ${
+    //                         camera.operationStatus?.toLowerCase() === "offline" ? "blinking" : ""
+    //                       } text-${getOperationStatusColor(camera.operationStatus)} bg-dark`}
+    //                       style={{
+    //                         left: `${camera.location[0]}%`,
+    //                         top: `${camera.location[1]}%`,
+    //                       }}
+    //                     >
+    //                       {camera.operationStatus?.toLowerCase() === "offline" ? (
+    //                         <>
+    //                           <FaExclamationTriangle style={{ marginRight: '5px', color: 'red' }} />
+    //                           <FaVideo style={{ marginRight: '5px', color: 'red' }} />
+    //                         </>
+    //                       ) : (
+    //                         <FaVideo style={{ marginRight: '5px' }} />
+    //                       )}
+    //                       {limitCameraName(camera.name)}
+    //                     </Link>
+    //                   ))}
+    //                 </div>
+    // </div>
   );
 };
 

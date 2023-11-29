@@ -11,6 +11,8 @@ import mapImage from "./map.jpeg";
 import { color } from "@mui/system";
 import "./CampusViewPage.css";
 import { Link } from "react-router-dom";
+import ImageWithCameras from "./ImagewithCamera";
+import BuildingMap from "./BuildingMap";
 
 function Home() {
   const baseURL = process.env.REACT_APP_BACKEND_URL;
@@ -48,86 +50,85 @@ function Home() {
     }
   };
 
-  const buildings1 = [
-    {
-      id: "64407a6155d5e66f8b5a69b8",
-      name: "Campus",
-      cameras: [
-        {
-          id: 1,
-          name: "Building 1",
-          operationStatus: "Online",
-          healthStatus: "Good",
-          location: [50, 100],
-        },
-        {
-          id: 2,
-          name: "Building 2",
-          operationStatus: "Online",
-          healthStatus: "Excellent",
-          location: [30, 80],
-        },
-        {
-          id: 3,
-          name: "Building 3",
-          operationStatus: "Offline",
-          healthStatus: "Needs Maintenance",
-          location: [40, 120],
-        },
-        {
-          id: 4,
-          name: "Building 4",
-          operationStatus: "offline",
-          healthStatus: "Fair",
-          location: [60, 60],
-        },
-        // Adding 6 more buildings below
-        {
-          id: 5,
-          name: "Building 5",
-          operationStatus: "Online",
-          healthStatus: "Good",
-          location: [70, 50],
-        },
-        {
-          id: 6,
-          name: "Building 6",
-          operationStatus: "Online",
-          healthStatus: "Excellent",
-          location: [80, 20],
-        },
-        {
-          id: 7,
-          name: "Building 7",
-          operationStatus: "Offline",
-          healthStatus: "Needs Maintenance",
-          location: [90, 90],
-        },
-        {
-          id: 8,
-          name: "Building 8",
-          operationStatus: "offline",
-          healthStatus: "Fair",
-          location: [120, 40],
-        },
-        {
-          id: 9,
-          name: "Building 9",
-          operationStatus: "Online",
-          healthStatus: "Excellent",
-          location: [110, 70],
-        },
-        {
-          id: 10,
-          name: "Building 10",
-          operationStatus: "Online",
-          healthStatus: "Good",
-          location: [85, 105],
-        },
-      ],
-    },
-  ];
-  
+  // const buildings1 = [
+  //   {
+  //     id: "64407a6155d5e66f8b5a69b8",
+  //     name: "Campus",
+  //     cameras: [
+  //       {
+  //         id: 1,
+  //         name: "Building 1",
+  //         operationStatus: "Online",
+  //         healthStatus: "Good",
+  //         location: [50, 100],
+  //       },
+  //       {
+  //         id: 2,
+  //         name: "Building 2",
+  //         operationStatus: "Online",
+  //         healthStatus: "Excellent",
+  //         location: [30, 80],
+  //       },
+  //       {
+  //         id: 3,
+  //         name: "Building 3",
+  //         operationStatus: "Offline",
+  //         healthStatus: "Needs Maintenance",
+  //         location: [40, 120],
+  //       },
+  //       {
+  //         id: 4,
+  //         name: "Building 4",
+  //         operationStatus: "offline",
+  //         healthStatus: "Fair",
+  //         location: [60, 60],
+  //       },
+  //       // Adding 6 more buildings below
+  //       {
+  //         id: 5,
+  //         name: "Building 5",
+  //         operationStatus: "Online",
+  //         healthStatus: "Good",
+  //         location: [70, 50],
+  //       },
+  //       {
+  //         id: 6,
+  //         name: "Building 6",
+  //         operationStatus: "Online",
+  //         healthStatus: "Excellent",
+  //         location: [80, 20],
+  //       },
+  //       {
+  //         id: 7,
+  //         name: "Building 7",
+  //         operationStatus: "Offline",
+  //         healthStatus: "Needs Maintenance",
+  //         location: [90, 90],
+  //       },
+  //       {
+  //         id: 8,
+  //         name: "Building 8",
+  //         operationStatus: "offline",
+  //         healthStatus: "Fair",
+  //         location: [120, 40],
+  //       },
+  //       {
+  //         id: 9,
+  //         name: "Building 9",
+  //         operationStatus: "Online",
+  //         healthStatus: "Excellent",
+  //         location: [110, 70],
+  //       },
+  //       {
+  //         id: 10,
+  //         name: "Building 10",
+  //         operationStatus: "Online",
+  //         healthStatus: "Good",
+  //         location: [85, 105],
+  //       },
+  //     ],
+  //   },
+  // ];
 
   const getOperationStatusColor = (status) => {
     if (status === "Online") {
@@ -254,45 +255,7 @@ function Home() {
                 </Row>
                 <Row>
                   <Col sm={8} style={{ position: "relative" }}>
-                  <img
-            src={mapImage}
-            alt="Map"
-            className="map-image"
-            style={{
-              opacity: 0.6,
-              transform: `scale(${zoomLevel})`, // Apply the scale transformation based on the zoom level
-            }}
-          />
-                    {buildings1.map((building) => (
-                      <div key={building._id} className="building-markers">
-                        {building?.cameras?.map((camera) => {
-                          const leftPercentage = `${
-                            (camera.location[0] % 50) + 30
-                          }%`;
-                          const topPer = (camera.location[1] % 100) + 240;
-                          const topPercentage = `${topPer}px`;
-                          return (
-                            <Link
-                              to={`/floormap/${building.id}`}
-                              key={camera._id}
-                              className={`camera-marker text-${getOperationStatusColor(
-                                camera.operationStatus
-                              )} `}
-                              style={{
-                                fontSize: "17px",
-                                position: "absolute",
-                                left: leftPercentage,
-                                top: topPercentage,
-                                backgroundColor: "#eee",
-                              }}
-                            >
-                              <FaVideo style={{ marginRight: "1px" }} />
-                              {camera.name}
-                            </Link>
-                          );
-                        })}
-                      </div>
-                    ))}
+                    <BuildingMap  imageUrl={mapImage} scale={0.25} />
                   </Col>
                   <Col sm={4} style={{ maxHeight: "500px", overflowY: "auto" }}>
                     {buildings.map((building) => (
@@ -333,10 +296,10 @@ function Home() {
                   ;
                 </Row>
                 <div>
-        {/* Add buttons to control zoom */}
-        <button onClick={handleZoomIn}>Zoom In</button>
-        <button onClick={handleZoomOut}>Zoom Out</button>
-      </div>
+                  {/* Add buttons to control zoom */}
+                  <button onClick={handleZoomIn}>Zoom In</button>
+                  <button onClick={handleZoomOut}>Zoom Out</button>
+                </div>
               </Container>
             </div>
           </div>

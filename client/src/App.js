@@ -40,9 +40,13 @@ function App() {
           <Route path='/home' element={<Dashboard />}>
             {" "}
           </Route>
+          <Route path='/cameravideo/indoor' element={<CameraVideo indoor={true} />}>
+            {" "}
+          </Route>
           <Route path='/cameravideo' element={<CameraVideo />}>
             {" "}
           </Route>
+         
           <Route
             path='/deviceManagement'
             element={<DeviceManagement />}
