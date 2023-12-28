@@ -36,6 +36,13 @@ function DataManagement() {
   }, [])
   
   useEffect(() => {
+    async function defaultVideoData() {
+      await axios.get("http://localhost:5001/videoData").then((response) => setData(response.data.videoData))
+    }
+    defaultVideoData()
+  }, [])
+
+  useEffect(() => {
     async function fetchCamLocations() {
       const response = await axios.get("http://localhost:5001/camera/getList")
       //console.log(response.data.buildingNames);
