@@ -14,6 +14,7 @@ import {
   MDBTableHead,
   MDBTableBody,
 } from "mdb-react-ui-kit"
+import { Link } from "react-router-dom"
 
 function DataManagement() {
   const [locations, setLocations] = useState([])
@@ -138,8 +139,10 @@ function DataManagement() {
           <MDBTable align='middle'>
             <MDBTableHead>
               <tr>
-                <th scope='col'>Camera ID</th>
-                <th scope='col'>Building ID</th>
+                {/* <th scope='col'>Camera ID</th>
+                <th scope='col'>Building ID</th> */}
+                 <th scope='col'>Camera Name</th>
+                <th scope='col'>Building Name</th>
                 <th scope='col'>Start Time</th>
                 <th scope='col'>End Time</th>
                 <th scope='col'>Date </th>
@@ -149,11 +152,17 @@ function DataManagement() {
             <MDBTableBody>
               {data.map((item) => (
                 <tr>
-                  <td>
+                  {/* <td>
                     <p className='fw-normal mb-1'>{item.cameraId}</p>
                   </td>
                   <td>
                     <p className='fw-normal mb-1'>{item.buildingId}</p>
+                  </td> */}
+                  <td>
+                    <p className='fw-normal mb-1'>{item.cameraName}</p>
+                  </td>
+                  <td>
+                    <p className='fw-normal mb-1'>{item.buildingName}</p>
                   </td>
                   <td>
                     <p className='fw-normal mb-1'>{item.startTime}</p>
@@ -164,9 +173,15 @@ function DataManagement() {
                   <td>
                     <p className='fw-normal mb-1'>{item.date}</p>
                   </td>
+                  
                   <td>
-                    <p className='fw-normal mb-1'>{item.videoLink}</p>
-                  </td>
+  <MDBBadge className='rounded-pill' pill bg='primary' text='dark'>
+    <a href={item.videoLink} target="_blank" rel="noopener noreferrer">
+      <MDBBtn>View Video Feed</MDBBtn>
+    </a>
+  </MDBBadge>
+</td>
+
                 </tr>
               ))}
             </MDBTableBody>

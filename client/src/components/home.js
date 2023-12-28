@@ -19,6 +19,10 @@ function Home() {
 
   const [buildings, setBuildings] = useState([]);
   console.log("process.env.BACKEND_URL", process.env.REACT_APP_BACKEND_URL);
+  const [noOfCameras, setNoOfCameras] = useState(0);
+  const [noOfInactiveCameras, setNoOfInactiveCameras] = useState(0);
+  const [noOfOutdoorCameras, setNoOfOutdoorCameras] = useState(0); 
+  const [noOfIndoorCameras, setNoOfIndoorCameras] = useState(0); 
 
   useEffect(() => {
     fetchBuildings();
@@ -32,6 +36,10 @@ function Home() {
         if (response.status === 200) {
           console.log("success");
           setBuildings(response.data?.buildings);
+        setNoOfCameras(response.data?.buildings?.map((building) => building.cameras.length).reduce((a, b) => a + b, 0));
+          setNoOfInactiveCameras(response.data?.buildings?.map((building) => building.cameras.filter((camera) => camera.operationStatus?.toLowerCase() === "offline").length).reduce((a, b) => a + b, 0));
+          setNoOfOutdoorCameras(response.data?.buildings?.map((building) => building.cameras.filter((camera) => camera.locationType == "Outdoor").length).reduce((a, b) => a + b, 0));
+          setNoOfIndoorCameras(response.data?.buildings?.map((building) => building.cameras.filter((camera) => camera.locationType == "Indoor").length).reduce((a, b) => a + b, 0));
         }
       })
       .catch((error) => {
@@ -156,7 +164,7 @@ function Home() {
                         <div class="col-9">
                           <h3 class="f-w-300 d-flex align-items-center m-b-0">
                             <i class="feather icon-arrow-up text-c-green f-30 m-r-10"></i>
-                            8
+                           {noOfCameras}
                           </h3>
                         </div>
                         {/* <div class='col-3 text-right'>
@@ -179,16 +187,16 @@ function Home() {
                     </div>
                   </div>
                 </div>
-
+                
                 <div class="col-md-8 col-xl-4">
                   <div class="card daily-sales">
                     <div class="card-block">
-                      <h6 class="mb-4">Maintenance Requests Raised</h6>
+                      <h6 class="mb-4">Number of Inactive Cameras</h6>
                       <div class="row d-flex align-items-center">
                         <div class="col-9">
                           <h3 class="f-w-300 d-flex align-items-center m-b-0">
                             <i class="feather icon-arrow-up text-c-green f-30 m-r-10"></i>
-                            10
+                            {noOfInactiveCameras}
                           </h3>
                         </div>
 
@@ -216,12 +224,76 @@ function Home() {
                 <div class="col-md-6 col-xl-4">
                   <div class="card daily-sales">
                     <div class="card-block">
-                      <h6 class="mb-4">Pending Maintenance Requests</h6>
+                      <h6 class="mb-4">Number of Active Cameras</h6>
                       <div class="row d-flex align-items-center">
                         <div class="col-9">
                           <h3 class="f-w-300 d-flex align-items-center m-b-0">
                             <i class="feather icon-arrow-up text-c-green f-30 m-r-10"></i>
-                            6
+                            {noOfCameras - noOfInactiveCameras}
+                          </h3>
+                        </div>
+
+                        {/* <div class='col-3 text-right'>
+                          <p class='m-b-0'>67%</p>
+                        </div> */}
+                      </div>
+                      <div
+                        className="progress m-t-30"
+                        style={{ height: "7px" }}
+                      >
+                        <div
+                          className="progress-bar progress-c-theme"
+                          role="progressbar"
+                          style={{ width: "50%" }}
+                          aria-valuenow="50"
+                          aria-valuemin="0"
+                          aria-valuemax="100"
+                        ></div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-6 col-xl-4">
+                  <div class="card daily-sales">
+                    <div class="card-block">
+                      <h6 class="mb-4">Number of Outdoor Cameras</h6>
+                      <div class="row d-flex align-items-center">
+                        <div class="col-9">
+                          <h3 class="f-w-300 d-flex align-items-center m-b-0">
+                            <i class="feather icon-arrow-up text-c-green f-30 m-r-10"></i>
+                            {noOfOutdoorCameras}
+                          </h3>
+                        </div>
+
+                        {/* <div class='col-3 text-right'>
+                          <p class='m-b-0'>67%</p>
+                        </div> */}
+                      </div>
+                      <div
+                        className="progress m-t-30"
+                        style={{ height: "7px" }}
+                      >
+                        <div
+                          className="progress-bar progress-c-theme"
+                          role="progressbar"
+                          style={{ width: "50%" }}
+                          aria-valuenow="50"
+                          aria-valuemin="0"
+                          aria-valuemax="100"
+                        ></div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-6 col-xl-4">
+                  <div class="card daily-sales">
+                    <div class="card-block">
+                      <h6 class="mb-4">Number of Indoor Cameras</h6>
+                      <div class="row d-flex align-items-center">
+                        <div class="col-9">
+                          <h3 class="f-w-300 d-flex align-items-center m-b-0">
+                            <i class="feather icon-arrow-up text-c-green f-30 m-r-10"></i>
+                            {noOfIndoorCameras}
                           </h3>
                         </div>
 
