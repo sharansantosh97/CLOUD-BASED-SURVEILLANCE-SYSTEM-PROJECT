@@ -4,18 +4,21 @@ const Building = require('../models/building');
 const getVideoDataByFilters = async (req, res, next) => {
   try {
     let query = {};
-    if (req.query.start && req.query.end) {
+    if (req.query.startDate && req.query.endDate) {
       query.date = {
-        $gte: new Date(req.query.start),
-        $lte: new Date(req.query.end)
+        $gte: new Date(req.query.startDate),
+        $lte: new Date(req.query.endDate)
       };
     }
     if (req.query.buildingName) {
-      const buildingIds = await Building.find({ name: new RegExp(req.query.buildingName, 'i') }).distinct('buildingId');
-      query.buildingId = { $in: buildingIds };
+      //const buildingIds = await Building.find({ name: new RegExp(req.query.buildingName, 'i') }).distinct('_id');
+      query.buildingName = req.query.buildingName;
     }
     if (req.query.cameraId) {
-      query.cameraId = Number(req.query.cameraId);
+      query.cameraId = req.query.cameraId;
+    }
+    if (req.query.cameraName) {
+      query.cameraName = req.query.cameraName;
     }
     console.log(query);
     const videoData = await VideoData.find(query);//.populate('buildingId').populate('cameraId');

@@ -18,10 +18,12 @@ import { Link } from "react-router-dom"
 
 function DataManagement() {
   const [locations, setLocations] = useState([])
+  const [cameraLocations, setCameraLocations] = useState([])
   const [startDate, setStartDate] = useState("")
   const [endDate, setEndDate] = useState("")
   const [cameraId, setCameraId] = useState("")
   const [buildingName, setBuildingName] = useState("")
+  const [cameraName, setCameraName] = useState("")
   const [data, setData] = useState([])
 
   useEffect(() => {
@@ -31,6 +33,15 @@ function DataManagement() {
       setLocations(response.data.buildingNames)
     }
     fetchLocations()
+  }, [])
+  
+  useEffect(() => {
+    async function fetchCamLocations() {
+      const response = await axios.get("http://localhost:5001/camera/getList")
+      //console.log(response.data.buildingNames);
+      setCameraLocations(response.data.cameraNames)
+    }
+    fetchCamLocations()
   }, [])
 
   const handleSubmit = (event) => {
@@ -42,6 +53,7 @@ function DataManagement() {
           endDate: endDate,
           cameraId: cameraId,
           buildingName: buildingName,
+          cameraName: cameraName,
         },
       })
       .then((response) => setData(response.data.videoData))
@@ -97,7 +109,7 @@ function DataManagement() {
                   style={{ marginTop: "7%" }}
                 />
               </Col>
-              <Col>
+              {/* <Col>
                 <Form.Label style={{ marginTop: "5%" }}>
                   Please enter the Camera ID you want feed from
                 </Form.Label>
@@ -109,6 +121,24 @@ function DataManagement() {
                   onChange={(event) => setCameraId(event.target.value)}
                   style={{ marginTop: "7%", aspectRatio: "16:9" }}
                 />
+              </Col> */}
+              <Col>
+                <Form.Label style={{ marginTop: "5%" }}>
+                  Please select the Camera Name
+                </Form.Label>
+                <Form.Control
+                  as='select'
+                  name='location'
+                  value={cameraName}
+                  onChange={(event) => setCameraName(event.target.value)}
+                >
+                  <option value=''>Select Camera Name</option>
+                  {cameraLocations.map((location) => (
+                    <option key={location} value={location}>
+                      {location}
+                    </option>
+                  ))}
+                </Form.Control>
               </Col>
               <Col>
                 <Form.Label style={{ marginTop: "5%" }}>
