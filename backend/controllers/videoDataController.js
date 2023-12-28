@@ -4,10 +4,10 @@ const Building = require('../models/building');
 const getVideoDataByFilters = async (req, res, next) => {
   try {
     let query = {};
-    if (req.query.start && req.query.end) {
+    if (req.query.startDate && req.query.endDate) {
       query.date = {
-        $gte: new Date(req.query.start),
-        $lte: new Date(req.query.end)
+        $gte: new Date(req.query.startDate),
+        $lte: new Date(req.query.endDate)
       };
     }
     if (req.query.buildingName) {
