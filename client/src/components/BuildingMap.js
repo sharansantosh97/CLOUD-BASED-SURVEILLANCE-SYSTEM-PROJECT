@@ -1,30 +1,30 @@
-import React, { useState, useEffect } from "react";
-import Image from "react-bootstrap/Image";
-import { FaVideo, FaSearchPlus, FaSearchMinus } from "react-icons/fa";
-import { Modal, Button, Form } from "react-bootstrap";
-import axios from "axios";
-import { useParams } from "react-router-dom";
-import { FaExclamationTriangle } from "react-icons/fa";
-import { Link } from "react-router-dom";
+import React, { useState, useEffect } from "react"
+import Image from "react-bootstrap/Image"
+import { FaVideo, FaSearchPlus, FaSearchMinus } from "react-icons/fa"
+import { Modal, Button, Form } from "react-bootstrap"
+import axios from "axios"
+import { useParams } from "react-router-dom"
+import { FaExclamationTriangle } from "react-icons/fa"
+import { Link } from "react-router-dom"
 
-import { FaBuilding } from "react-icons/fa";
+import { FaBuilding } from "react-icons/fa"
 
 const BuildingMap = ({ imageUrl, cameraData, scale }) => {
-  const baseURL = process.env.REACT_APP_BACKEND_URL;
-  const [iconCoordinates, setIconCoordinates] = useState([]);
-  const [showAddModal, setShowAddModal] = useState(false);
-  const [cameras, setCameras] = useState([]);
-  const [buildings, setBuildings] = useState([]);
-  const [zoomLevel, setZoomLevel] = useState(scale); // New state for zoom level
-  const { buildingId } = useParams();
+  const baseURL = process.env.REACT_APP_BACKEND_URL
+  const [iconCoordinates, setIconCoordinates] = useState([])
+  const [showAddModal, setShowAddModal] = useState(false)
+  const [cameras, setCameras] = useState([])
+  const [buildings, setBuildings] = useState([])
+  const [zoomLevel, setZoomLevel] = useState(scale) // New state for zoom level
+  const { buildingId } = useParams()
 
   const getRandomElement = function (arr) {
     // if (arr && arr.length) {
     //     const randomIndex = Math.floor(Math.random() * arr.length);
     //     return arr[randomIndex];
     // }
-    return [2310, 1300]; // or undefined, or any default value you prefer
-  };
+    return [2310, 1300] // or undefined, or any default value you prefer
+  }
   const location_data = [
     [785, 1742],
     [689, 629],
@@ -35,7 +35,7 @@ const BuildingMap = ({ imageUrl, cameraData, scale }) => {
     [2261, 2069],
     [2011, 2959],
     [1474, 2549],
-  ];
+  ]
 
   const [newCamera, setNewCamera] = useState({
     name: "",
@@ -48,96 +48,102 @@ const BuildingMap = ({ imageUrl, cameraData, scale }) => {
     videoUrl: "",
     dataStorage: "",
     timeframe: "",
-  });
-  const [clickedCoords, setClickedCoords] = useState({ x: 0, y: 0 });
+  })
+  const [clickedCoords, setClickedCoords] = useState({ x: 0, y: 0 })
 
   useEffect(() => {
-    fetchBuildings();
-  }, [buildingId]);
+    fetchBuildings()
+  }, [buildingId])
 
   const fetchBuildings = () => {
     axios
       .get(`${baseURL}/building`)
       .then((response) => {
-        console.log("response: ", response.data);
+        console.log("response: ", response.data)
         if (response.status === 200) {
-          console.log("success");
-          setBuildings(response.data?.buildings);
+          console.log("success")
+          setBuildings(response.data?.buildings)
         }
       })
       .catch((error) => {
-        console.log("error: ", error);
-      });
-  };
+        console.log("error: ", error)
+      })
+  }
 
   const handleImageClick = (event) => {
-    const { offsetX, offsetY } = event.nativeEvent;
-    console.log("offsetX", offsetX);
-    setClickedCoords({ x: offsetX, y: offsetY });
-    setIconCoordinates([{ x: offsetX, y: offsetY }]);
-    setShowAddModal(true);
-  };
+    const { offsetX, offsetY } = event.nativeEvent
+    console.log("offsetX", offsetX)
+    setClickedCoords({ x: offsetX, y: offsetY })
+    setIconCoordinates([{ x: offsetX, y: offsetY }])
+    setShowAddModal(true)
+  }
 
   const zoomIn = () => {
-    setZoomLevel((prevZoomLevel) => prevZoomLevel * 1.2); // Increase zoom by 20%
-  };
+    setZoomLevel((prevZoomLevel) => prevZoomLevel * 1.2) // Increase zoom by 20%
+  }
 
   const zoomOut = () => {
-    setZoomLevel((prevZoomLevel) => prevZoomLevel / 1.2); // Decrease zoom by 20%
-  };
+    setZoomLevel((prevZoomLevel) => prevZoomLevel / 1.2) // Decrease zoom by 20%
+  }
   const handleInputChange = (event) => {
-    const { name, value } = event.target;
-    setNewCamera((prevCamera) => ({ ...prevCamera, [name]: value }));
-  };
+    const { name, value } = event.target
+    setNewCamera((prevCamera) => ({ ...prevCamera, [name]: value }))
+  }
 
   const handleCloseAddModal = () => {
-    setShowAddModal(false);
-    setIconCoordinates([]);
-  };
+    setShowAddModal(false)
+    setIconCoordinates([])
+  }
 
   const getOperationStatusColor = (status) => {
     if (status === "Online") {
-      return "success";
+      return "success"
     } else if (status === "Offline") {
-      return "danger";
+      return "danger"
     } else {
-      return "warning";
+      return "warning"
     }
-  };
+  }
 
   const renderIcons = () => {
     const buildingsWithOutdoorCamera = buildings.map((building) => {
       // Find the first outdoor camera in this building
       const outdoorCamera = building?.cameras?.find(
         (camera) => camera?.locationType === "Outdoor"
-      );
+      )
 
       // Return a new object with all properties of the building, plus the outdoorCamera
       return {
         ...building,
         outdoorCamera: outdoorCamera || null, // Set to null if no outdoor camera is found
-      };
-    });
-    console.log("buildingsWithOutdoorCamera", buildingsWithOutdoorCamera);
+      }
+    })
+    console.log("buildingsWithOutdoorCamera", buildingsWithOutdoorCamera)
     return buildingsWithOutdoorCamera.map((building, index) => {
-      const { location } = building;
-      const camera = building?.outdoorCamera;
-      console.log(building, index, location?.[0] ?? rand[0] * zoomLevel, location?.[1] ?? rand[1] * zoomLevel );
-      const rand = getRandomElement(location_data);
-      
+      const { location } = building
+      const camera = building?.outdoorCamera
+      console.log(
+        building,
+        index,
+        location?.[0] ?? rand[0] * zoomLevel,
+        location?.[1] ?? rand[1] * zoomLevel
+      )
+      const rand = getRandomElement(location_data)
+
       return (
         <div
           key={building?._id}
           style={{
             position: "absolute",
-            left: location?.[0]  * 0.1, // Adjust position based on zoom
+            left: location?.[0] * 0.1, // Adjust position based on zoom
             top: location?.[1] * 0.1, // Adjust position based on zoom
             transform: `scale(${2 * zoomLevel})`, // Keep icon size constant
           }}
         >
           <Link
-            to={`/cameravideo?url=${encodeURIComponent(camera?.rtspMeLink)}`}
-           // key={camera?._id}
+            to={`/cameravideo?url=${encodeURIComponent(
+              camera?.rtspMeLink
+            )}&id=${encodeURIComponent(camera?._id)}`}
             className={`camera-marker ${
               camera?.operationStatus?.toLowerCase() === "offline"
                 ? "blinking"
@@ -145,8 +151,8 @@ const BuildingMap = ({ imageUrl, cameraData, scale }) => {
             } text-${getOperationStatusColor(camera?.operationStatus)} bg-dark`}
             style={{
               scale: `${13 * zoomLevel}`,
-              left: location?.[0]  * zoomLevel, // Adjust position based on zoom
-              top: location?.[1]  * zoomLevel,
+              left: location?.[0] * zoomLevel, // Adjust position based on zoom
+              top: location?.[1] * zoomLevel,
             }}
           >
             {camera?.operationStatus?.toLowerCase() === "offline" ? (
@@ -162,7 +168,7 @@ const BuildingMap = ({ imageUrl, cameraData, scale }) => {
           </Link>
           <Link
             to={`/floormap/${building._id}`}
-           // key={camera?._id}
+            // key={camera?._id}
             className={`camera-marker ${
               camera?.operationStatus?.toLowerCase() === "offline"
                 ? "blinking"
@@ -171,16 +177,16 @@ const BuildingMap = ({ imageUrl, cameraData, scale }) => {
             style={{
               scale: `${13 * zoomLevel}`,
               left: location?.[0] * zoomLevel, // Adjust position based on zoom
-            top: location?.[1]  * zoomLevel,
+              top: location?.[1] * zoomLevel,
               marginLeft: "100px",
             }}
           >
             <FaBuilding style={{ marginRight: "5px" }} />
           </Link>
         </div>
-      );
-    });
-  };
+      )
+    })
+  }
 
   return (
     <div style={{ position: "relative", overflow: "auto" }}>
@@ -196,7 +202,7 @@ const BuildingMap = ({ imageUrl, cameraData, scale }) => {
       <div style={{ maxWidth: "100%" }}>
         <Image
           src={imageUrl}
-          alt="main"
+          alt='main'
           style={{
             transform: `scale(${zoomLevel})`,
             transformOrigin: "top left",
@@ -206,7 +212,7 @@ const BuildingMap = ({ imageUrl, cameraData, scale }) => {
         {renderIcons()}
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default BuildingMap;
+export default BuildingMap

@@ -1,37 +1,39 @@
-import React, { useState, useEffect } from "react";
-import Row from "react-bootstrap/Row";
-import Col from "react-bootstrap/Col";
-import LeftNavBar from "../LeftNavBar/LeftNavBar";
-import AlertTable from './AlertTable';
-import axios from "axios";
-import NavBarLoggedIn from "../Navbar/NavBarLoggedIn";
+import React, { useState, useEffect } from "react"
+import Row from "react-bootstrap/Row"
+import Col from "react-bootstrap/Col"
+import LeftNavBar from "../LeftNavBar/LeftNavBar"
+import AlertTable from "./alertTable"
+import axios from "axios"
+import NavBarLoggedIn from "../Navbar/NavBarLoggedIn"
 
 function Alert() {
-  const [alerts, setAlerts] = useState([]);
-  const [locations, setLocations] = useState("");
+  const [alerts, setAlerts] = useState([])
+  const [locations, setLocations] = useState("")
 
   useEffect(() => {
     async function fetchLocations() {
       try {
-        const response = await axios.get("http://localhost:5001/building/getList");
-        setLocations(response.data.buildingNames);
+        const response = await axios.get(
+          "http://localhost:5001/building/getList"
+        )
+        setLocations(response.data.buildingNames)
       } catch (error) {
-        console.error("Error fetching locations:", error);
+        console.error("Error fetching locations:", error)
       }
     }
 
     async function fetchAlerts() {
       try {
-        const response = await axios.get("http://localhost:5001/alert"); // Updated to the new alert endpoint
-        setAlerts(response.data.alerts);
+        const response = await axios.get("http://localhost:5001/alert") // Updated to the new alert endpoint
+        setAlerts(response.data.alerts)
       } catch (error) {
-        console.error("Error fetching alerts:", error);
+        console.error("Error fetching alerts:", error)
       }
     }
 
-    fetchLocations();
-    fetchAlerts();
-  }, []);
+    fetchLocations()
+    fetchAlerts()
+  }, [])
 
   return (
     <>
@@ -60,7 +62,7 @@ function Alert() {
         </Col>
       </Row>
     </>
-  );
+  )
 }
 
-export default Alert;
+export default Alert
