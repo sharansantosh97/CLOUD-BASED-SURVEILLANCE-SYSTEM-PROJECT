@@ -17,6 +17,26 @@ const BuildingMap = ({ imageUrl, cameraData, scale }) => {
   const [buildings, setBuildings] = useState([]);
   const [zoomLevel, setZoomLevel] = useState(scale); // New state for zoom level
   const { buildingId } = useParams();
+  
+  const  getRandomElement = function(arr) {
+    // if (arr && arr.length) {
+    //     const randomIndex = Math.floor(Math.random() * arr.length);
+    //     return arr[randomIndex];
+    // }
+    return [2310, 1300]; // or undefined, or any default value you prefer
+}
+  const location_data = [
+    [785, 1742],
+    [689, 629],
+    [1506, 682],
+    [1903, 707],
+    [2310, 1063],
+    [2128, 1359],
+    [2261, 2069],
+    [2011, 2959],
+    [1474, 2549]
+]
+
   const [newCamera, setNewCamera] = useState({
     name: "",
     buildingId: buildingId,
@@ -103,13 +123,14 @@ const BuildingMap = ({ imageUrl, cameraData, scale }) => {
       const { location } = building;
       const camera = building?.outdoorCamera;
       console.log(building, index);
+      const rand = getRandomElement(location_data);
       return (
         <div
           key={index}
           style={{
             position: "absolute",
-            left: 2310 * zoomLevel, // Adjust position based on zoom
-            top: 1063 * zoomLevel, // Adjust position based on zoom
+            left: location?.[0] ?? rand[0] * zoomLevel, // Adjust position based on zoom
+            top: location?.[1] ?? rand[1] * zoomLevel, // Adjust position based on zoom
             transform: `scale(${2 * zoomLevel})`, // Keep icon size constant
           }}
         >

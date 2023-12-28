@@ -105,11 +105,72 @@ function CameraVideo({indoor}) {
                   </Col>
                 </Row>
                 <Row>
-                  <Col sm={8}>
-                    
-                   { indoor ?<iframe width="1033" height="581" src="https://www.youtube.com/embed/5EiWRP0R9NE" title="Security camera video shows the moment tornado hit Mississippi high school" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>:
-                  <iframe width="1033" height="581" src="https://www.youtube.com/embed/cMDCh6OfthM" title="CCTV by surveillance camera" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>     }             </Col>
-                  {/* <Col sm={4}>
+                <Col sm={12}>
+    {/* Removed the commented-out code for simplicity */}
+
+{indoor ? <div> 
+
+  <Row>
+        {/* Each Col should be a direct child of Row */}
+        <Col lg={6}>
+            {/* First div inside first column */}
+            <div>
+                <iframe width="640" height="480" src="https://rtsp.me/embed/E8zZ63B2/" frameborder="0" allowfullscreen></iframe>
+                <p align="right">powered by <a href="https://rtsp.me" title="RTSP.ME - Free website RTSP video steaming service" target="_blank">rtsp.me</a></p>
+            </div>
+        </Col>
+
+        <Col lg={6}>
+            {/* Second div inside second column */}
+            <div>
+                <iframe width="640" height="480" src="https://rtsp.me/embed/74zSfsQ8/" frameborder="0" allowfullscreen></iframe>
+                <p align="right">powered by <a href="https://rtsp.me" title="RTSP.ME - Free website RTSP video steaming service" target="_blank">rtsp.me</a></p>
+            </div>
+        </Col>
+    </Row>
+    <Row>
+    <div><iframe width="640" height="480" src="https://rtsp.me/embed/HH7HHRDe/" frameborder="0" allowfullscreen></iframe><p align="right">powered by <a href="https://rtsp.me" title ="RTSP.ME - Free website RTSP video steaming service" target="_blank" >rtsp.me</a></p></div>
+    </Row>
+</div>: <div>
+    <Row>
+        {/* Each Col should be a direct child of Row */}
+        <Col lg={6}>
+            {/* First div inside first column */}
+            <div>
+                <iframe width="640" height="480" src="https://rtsp.me/embed/E8zZ63B2/" frameborder="0" allowfullscreen></iframe>
+                <p align="right">powered by <a href="https://rtsp.me" title="RTSP.ME - Free website RTSP video steaming service" target="_blank">rtsp.me</a></p>
+            </div>
+        </Col>
+
+        <Col lg={6}>
+            {/* Second div inside second column */}
+            <div>
+                <iframe width="640" height="480" src="https://rtsp.me/embed/74zSfsQ8/" frameborder="0" allowfullscreen></iframe>
+                <p align="right">powered by <a href="https://rtsp.me" title="RTSP.ME - Free website RTSP video steaming service" target="_blank">rtsp.me</a></p>
+            </div>
+        </Col>
+    </Row>
+    <Row>
+    <Col lg={6}>
+            {/* First div inside first column */}
+            <div>
+            <div><iframe width="640" height="480" src="https://rtsp.me/embed/HH7HHRDe/" frameborder="0" allowfullscreen></iframe><p align="right">powered by <a href="https://rtsp.me" title ="RTSP.ME - Free website RTSP video steaming service" target="_blank" >rtsp.me</a></p></div>
+                <p align="right">powered by <a href="https://rtsp.me" title="RTSP.ME - Free website RTSP video steaming service" target="_blank">rtsp.me</a></p>
+            </div>
+        </Col>
+
+        <Col lg={6}>
+            {/* Second div inside second column */}
+            <div>
+            <div><iframe width="640" height="480" src="https://rtsp.me/embed/Dan9BQaZ/" frameborder="0" allowfullscreen></iframe><p align="right">powered by <a href="https://rtsp.me" title ="RTSP.ME - Free website RTSP video steaming service" target="_blank" >rtsp.me</a></p></div>
+                <p align="right">powered by <a href="https://rtsp.me" title="RTSP.ME - Free website RTSP video steaming service" target="_blank">rtsp.me</a></p>
+            </div>
+        </Col>
+    </Row>
+    </div>}
+</Col>
+
+             {/* <Col sm={4}>
                     {buildings.map((building) => (
                       <div key={building.id}>
                         <Card className='building-card'>

@@ -15,6 +15,7 @@
     "express": "^4.18.2",
     "lodash": "^4.17.21",
     "mongoose": "^7.0.3",
+    "node-rtsp-stream": "^0.0.9",
     "nodemon": "^3.0.1",
     "package.json": "^2.0.1"
   }
