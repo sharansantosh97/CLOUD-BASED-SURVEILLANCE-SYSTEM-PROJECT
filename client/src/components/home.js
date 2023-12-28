@@ -139,9 +139,9 @@ function Home() {
   // ];
 
   const getOperationStatusColor = (status) => {
-    if (status === "Online") {
+    if (status === "online") {
       return "success";
-    } else if (status === "Offline") {
+    } else if (status === "offline") {
       return "danger";
     } else {
       return "warning";
@@ -330,16 +330,16 @@ function Home() {
                     <BuildingMap  imageUrl={mapImage} scale={0.25} />
                   </Col>
                    {/* Right side ... */}
-                  <Col sm={4} style={{ maxHeight: "500px", overflowY: "auto" }}>
+                  <Col sm={4} style={{ maxHeight: "800px", overflowY: "auto" }}>
                     {buildings.map((building) => (
                       <div key={building._id}>
-                        <Card className="building-card mb-3">
+                        <Card className=" mb-2">
                           <Card.Body
                             style={{ paddingTop: 10, backgroundColor: "#eee" }}
                           >
                          
                          <Card.Text
-                                style={{ fontSize: "16px" }}
+                                style={{ fontSize: "19px" }}
                             
                               >
                                 <strong>{building.name || "Building Name"}</strong>
@@ -348,7 +348,7 @@ function Home() {
                               </Card.Text>
                             {building?.cameras?.map((camera) => (
                               <Card.Text
-                                style={{ fontSize: "16px" }}
+                                style={{ fontSize: "18x" }}
                                 key={camera._id}
                                 className={`mb-2 text-${getOperationStatusColor(
                                   camera.operationStatus
