@@ -17,6 +17,9 @@ const getVideoDataByFilters = async (req, res, next) => {
     if (req.query.cameraId) {
       query.cameraId = req.query.cameraId;
     }
+    if (req.query.cameraName) {
+      query.cameraName = req.query.cameraName;
+    }
     console.log(query);
     const videoData = await VideoData.find(query);//.populate('buildingId').populate('cameraId');
     res.status(200).json({ videoData });

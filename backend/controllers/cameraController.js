@@ -2,6 +2,17 @@ const Alert = require('../models/alert');
 const Camera = require('../models/camera');
 const Building = require('../models/building');
 
+const getNames = async (req, res, next) => {
+    try {
+      const cameras = await Camera.find({}, 'name');
+      const cameraNames = cameras.map(camera => camera.name);
+      res.json({ cameraNames });
+    } catch (err) {
+      console.error(err);
+      res.status(500).json({ message: err.message });
+    }
+  };
+
 const getCameras = async (req, res, next) => {
     try {
         const cameras = await Camera.find();
@@ -84,5 +95,5 @@ const deleteCamera = async (req, res, next) => {
     }
 };
 
-module.exports = { getCameras, getCamerasByFilters, createCamera, updateCamera, deleteCamera };
+module.exports = { getNames, getCameras, getCamerasByFilters, createCamera, updateCamera, deleteCamera };
 
