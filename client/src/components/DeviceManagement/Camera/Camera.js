@@ -15,7 +15,7 @@ import DeviceTable from "../../DeviceTable";
 const Camera=()=>{
 
 
-    return <Container style={{marginTop:"5%"}}>
+return <Container style={{marginTop:"5%"}}>
 {}
 
 <DeviceTable></DeviceTable>

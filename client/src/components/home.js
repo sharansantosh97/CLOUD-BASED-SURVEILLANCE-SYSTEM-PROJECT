@@ -156,7 +156,7 @@ function Home() {
                         <div class="col-9">
                           <h3 class="f-w-300 d-flex align-items-center m-b-0">
                             <i class="feather icon-arrow-up text-c-green f-30 m-r-10"></i>
-                            25
+                            8
                           </h3>
                         </div>
                         {/* <div class='col-3 text-right'>
@@ -257,6 +257,7 @@ function Home() {
                   <Col sm={8} style={{ position: "relative" }}>
                     <BuildingMap  imageUrl={mapImage} scale={0.25} />
                   </Col>
+                   {/* Right side ... */}
                   <Col sm={4} style={{ maxHeight: "500px", overflowY: "auto" }}>
                     {buildings.map((building) => (
                       <div key={building._id}>
@@ -264,6 +265,15 @@ function Home() {
                           <Card.Body
                             style={{ paddingTop: 10, backgroundColor: "#eee" }}
                           >
+                         
+                         <Card.Text
+                                style={{ fontSize: "16px" }}
+                            
+                              >
+                                <strong>{building.name || "Building Name"}</strong>
+                                <br />
+                           
+                              </Card.Text>
                             {building?.cameras?.map((camera) => (
                               <Card.Text
                                 style={{ fontSize: "16px" }}

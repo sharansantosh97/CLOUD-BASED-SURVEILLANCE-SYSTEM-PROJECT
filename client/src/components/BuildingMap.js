@@ -17,14 +17,14 @@ const BuildingMap = ({ imageUrl, cameraData, scale }) => {
   const [buildings, setBuildings] = useState([]);
   const [zoomLevel, setZoomLevel] = useState(scale); // New state for zoom level
   const { buildingId } = useParams();
-  
-  const  getRandomElement = function(arr) {
+
+  const getRandomElement = function (arr) {
     // if (arr && arr.length) {
     //     const randomIndex = Math.floor(Math.random() * arr.length);
     //     return arr[randomIndex];
     // }
     return [2310, 1300]; // or undefined, or any default value you prefer
-}
+  };
   const location_data = [
     [785, 1742],
     [689, 629],
@@ -34,8 +34,8 @@ const BuildingMap = ({ imageUrl, cameraData, scale }) => {
     [2128, 1359],
     [2261, 2069],
     [2011, 2959],
-    [1474, 2549]
-]
+    [1474, 2549],
+  ];
 
   const [newCamera, setNewCamera] = useState({
     name: "",
@@ -122,21 +122,22 @@ const BuildingMap = ({ imageUrl, cameraData, scale }) => {
     return buildingsWithOutdoorCamera.map((building, index) => {
       const { location } = building;
       const camera = building?.outdoorCamera;
-      console.log(building, index);
+      console.log(building, index, location?.[0] ?? rand[0] * zoomLevel, location?.[1] ?? rand[1] * zoomLevel );
       const rand = getRandomElement(location_data);
+      
       return (
         <div
-          key={index}
+          key={building?._id}
           style={{
             position: "absolute",
-            left: location?.[0] ?? rand[0] * zoomLevel, // Adjust position based on zoom
-            top: location?.[1] ?? rand[1] * zoomLevel, // Adjust position based on zoom
+            left: location?.[0]  * 0.1, // Adjust position based on zoom
+            top: location?.[1] * 0.1, // Adjust position based on zoom
             transform: `scale(${2 * zoomLevel})`, // Keep icon size constant
           }}
         >
           <Link
-            to="/cameravideo"
-            key={camera?._id}
+            to={`/cameravideo?url=${encodeURIComponent(camera?.rtspMeLink)}`}
+           // key={camera?._id}
             className={`camera-marker ${
               camera?.operationStatus?.toLowerCase() === "offline"
                 ? "blinking"
@@ -144,8 +145,8 @@ const BuildingMap = ({ imageUrl, cameraData, scale }) => {
             } text-${getOperationStatusColor(camera?.operationStatus)} bg-dark`}
             style={{
               scale: `${13 * zoomLevel}`,
-              left: `${2310}%`,
-              top: `${1063}%`,
+              left: location?.[0]  * zoomLevel, // Adjust position based on zoom
+              top: location?.[1]  * zoomLevel,
             }}
           >
             {camera?.operationStatus?.toLowerCase() === "offline" ? (
@@ -161,7 +162,7 @@ const BuildingMap = ({ imageUrl, cameraData, scale }) => {
           </Link>
           <Link
             to={`/floormap/${building._id}`}
-            key={camera?._id}
+           // key={camera?._id}
             className={`camera-marker ${
               camera?.operationStatus?.toLowerCase() === "offline"
                 ? "blinking"
@@ -169,8 +170,8 @@ const BuildingMap = ({ imageUrl, cameraData, scale }) => {
             } text-${getOperationStatusColor(camera?.operationStatus)} bg-dark`}
             style={{
               scale: `${13 * zoomLevel}`,
-              left: `${2310}%`,
-              top: `${1063}%`,
+              left: location?.[0] * zoomLevel, // Adjust position based on zoom
+            top: location?.[1]  * zoomLevel,
               marginLeft: "100px",
             }}
           >
