@@ -149,7 +149,7 @@ function ControlTable() {
               header="Actions"
               filter={false}
             />
-            <Column body={actionsTemplate} header="Modes" filter={false} />
+            {/* <Column body={actionsTemplate} header="Modes" filter={false} /> */}
           </DataTable>
         </Col>
       </Row>

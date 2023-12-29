@@ -11,6 +11,7 @@ import axios from "axios";
 import { Link } from 'react-router-dom';
 import { Button } from 'react-bootstrap';
 import UpdateDeviceTableModal from "../UpdateDeviceTableModal";
+import DeviceTable from "../DeviceTable";
 
 function DeviceDataTable() {
   const baseURL = process.env.REACT_APP_BACKEND_URL;
@@ -96,6 +97,7 @@ function DeviceDataTable() {
       <Link to="/controlConfigure">
         <Button variant="primary">Go to Control Configure</Button>
       </Link>
+      <DeviceTable></DeviceTable>
       <Row>
       <Col>
           <DataTable value={cameras} paginator rows={10}>
