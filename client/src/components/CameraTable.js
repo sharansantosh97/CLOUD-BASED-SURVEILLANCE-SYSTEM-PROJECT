@@ -11,7 +11,7 @@ const CameraTable = (props) => {
   const [rows, setRows] = useState(10);
 
   const operationStatusBodyTemplate = (rowData) => {
-    const color = rowData.operationStatus === 'Online' ? 'green' : 'red';
+    const color = rowData.operationStatus?.toLowerCase() === 'online' ? 'green' : 'red';
     return (
       <span style={{ color }}>
         {rowData.operationStatus}
@@ -20,7 +20,7 @@ const CameraTable = (props) => {
   };
 
   const healthStatusBodyTemplate = (rowData) => {
-    const color = rowData.healthStatus === 'Active' ? 'green' : 'red';
+    const color = ['active', 'excellent']?.includes(rowData.healthStatus?.toLowerCase()) ? 'green' : 'red';
     return (
       <span style={{ color }}>
         {rowData.healthStatus}
@@ -68,7 +68,9 @@ const CameraTable = (props) => {
         <Column field="buildingName" header="Building" filter filterPlaceholder="Search by building" filterMatchMode="contains" filterHeader={filterHeader} />
         <Column field="locationType" header="Location Type" filter filterPlaceholder="Search by location type" filterMatchMode="contains" filterHeader={filterHeader} />
         <Column field="dataStorage" header="Storage" filter filterPlaceholder="Search by storage" filterMatchMode="contains" filterHeader={filterHeader} />
+        <Column field="timeframes" header="Timeframe" filter filterPlaceholder="Search by timeframe" filterMatchMode="contains" filterHeader={filterHeader} />
         <Column field="operationStatus" header="Operation Status" body={operationStatusBodyTemplate} filter filterPlaceholder="Search by operation status" filterMatchMode="contains" filterHeader={filterHeader} />
+        <Column field="rtspMeLink" header="Live Feed" filter filterPlaceholder="Search by Live Feed" filterMatchMode="contains" filterHeader={filterHeader} />
         <Column field="alerts" header="Alerts" body={alertsBodyTemplate} filter filterPlaceholder="Search by alerts" filterMatchMode="contains" filterHeader={filterHeader} />
       </DataTable>
     </div>

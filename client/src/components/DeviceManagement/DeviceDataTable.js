@@ -86,9 +86,10 @@ function DeviceDataTable() {
           <DataTable value={cameras} paginator rows={10}>
             <Column field="name" header="Camera Name" filter filterPlaceholder="Search by name" />
             <Column field="cameraType" header="Type" filter filterPlaceholder="Search by type" />
+            <Column field="timeframes" header="Timeframes" filter filterPlaceholder="Search by timeframe" />
             <Column field="healthStatus" header="Health" filter filterPlaceholder="Search by health" />
             <Column field="resolution" header="Resolution" filter filterPlaceholder="Search by resolution" />
-            <Column field="dataStorage" header="Storage Location" filter filterPlaceholder="Search by storage location" />
+            {/* <Column field="dataStorage" header="Storage Location" filter filterPlaceholder="Search by storage location" /> */}
             <Column field="operationStatus" header="Operation Status" filter filterPlaceholder="Search by operation status" />
             <Column field="buildingName" header="Building" filter filterPlaceholder="Search by building" />
             <Column field="locationType" header="Location Type" filter filterPlaceholder="Search by location type" />
