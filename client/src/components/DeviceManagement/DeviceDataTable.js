@@ -10,6 +10,7 @@ import BootstrapSwitchButton from "bootstrap-switch-button-react";
 import axios from "axios";
 import { Link } from 'react-router-dom';
 import { Button } from 'react-bootstrap';
+import UpdateDeviceTableModal from "../UpdateDeviceTableModal";
 
 function DeviceDataTable() {
   const baseURL = process.env.REACT_APP_BACKEND_URL;
@@ -35,6 +36,20 @@ function DeviceDataTable() {
       });
   };
 
+  const deleteCamera = (reqId) => {
+    axios.delete(`${baseURL}/camera/${reqId}`)
+      .then(response => {
+        console.log("response: ", response.data);
+        if (response.status === 200) {
+          console.log("success");
+          // Assuming fetchCameras is a function that updates the list of cameras
+          fetchCameras(); 
+        }
+      })
+      .catch(error => {
+        console.log("error: ", error);
+      });
+  };
   const cameraTypeOptions = [
     { label: "All", value: null },
     { label: "DSLR", value: "DSLR" },
@@ -60,19 +75,19 @@ function DeviceDataTable() {
 
   const actionsTemplate = (rowData) => (
     <span>
-      <a href={rowData.videoUrl} className="button-link" target="_blank">
+      <Link 
+        to={`/cameravideo?url=${encodeURIComponent(rowData.rtspMeLink)}&id=${encodeURIComponent(rowData._id)}`}
+        className="button-link"
+      >
         View
-      </a>{" "}
+      </Link>{" "}
       <br />
-      <a href={rowData.videoUrl} className="button-link" target="_blank">
-        Add
-      </a>{" "}
-      <a href={rowData.videoUrl} className="button-link" target="_blank">
-        Update
-      </a>{" "}
-      <a href={rowData.videoUrl} className="button-link" target="_blank">
+      {/* The other actions remain as anchor tags if they are meant to navigate outside of the app */}
+       <UpdateDeviceTableModal camera={rowData}></UpdateDeviceTableModal>
+      <Button onClick={() => deleteCamera(rowData._id)} className="button-link">
         Delete
-      </a>
+      </Button>
+
     </span>
   );
 
