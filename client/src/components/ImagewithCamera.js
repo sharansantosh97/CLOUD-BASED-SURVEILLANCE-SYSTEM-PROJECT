@@ -125,7 +125,9 @@ const ImageWithIcons = ({ imageUrl , cameraData , scale}) => {
           }}
         >
           <Link
-                          to="/cameravideo/indoor"
+                          to={`/cameravideo?url=${encodeURIComponent(
+                            camera?.rtspMeLink
+                          )}&id=${encodeURIComponent(camera?._id)}`}
                           key={camera._id}
                           className={`camera-marker ${
                             camera.operationStatus?.toLowerCase() === "offline" ? "blinking" : ""

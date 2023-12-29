@@ -139,9 +139,9 @@ function Home() {
   // ];
 
   const getOperationStatusColor = (status) => {
-    if (status === "online") {
+    if (status === "online" || status === "Online") {
       return "success";
-    } else if (status === "offline") {
+    } else if (status === "offline" || status === "Offline") {
       return "danger";
     } else {
       return "warning";
@@ -333,29 +333,29 @@ function Home() {
                   <Col sm={4} style={{ maxHeight: "800px", overflowY: "auto" }}>
                     {buildings.map((building) => (
                       <div key={building._id}>
-                        <Card className=" mb-2">
+                        <Card >
                           <Card.Body
-                            style={{ paddingTop: 10, backgroundColor: "#eee" }}
+                            style={{ paddingTop: 10, backgroundColor: "#fff" }}
                           >
                          
                          <Card.Text
                                 style={{ fontSize: "19px" }}
                             
                               >
-                                <strong>{building.name || "Building Name"}</strong>
+                                <strong>{"Building: " + building.name || "Building Name"}</strong>
                                 <br />
                            
                               </Card.Text>
                             {building?.cameras?.map((camera) => (
                               <Card.Text
-                                style={{ fontSize: "18x" }}
+                                style={{ fontSize: "20px" }}
                                 key={camera._id}
                                 className={`mb-2 text-${getOperationStatusColor(
                                   camera.operationStatus
                                 )}`}
                                 id={camera._id}
                               >
-                                <strong>{camera.name || "Camera Name"}</strong>
+                                <strong>{"Camera: " + camera.name || "Camera Name"}</strong>
                                 <br />
                                 Operation Status:{" "}
                                 {camera.operationStatus || "Status Unavailable"}

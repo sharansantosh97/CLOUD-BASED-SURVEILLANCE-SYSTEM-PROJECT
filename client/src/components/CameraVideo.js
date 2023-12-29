@@ -74,7 +74,7 @@ function CameraVideo({ indoor }) {
                           width='940'
                           height='680'
                           src={videoUrl}
-                          frameborder='0'
+                          frFameborder='0'
                           allowfullscreen
                         ></iframe>
                       </Col>
