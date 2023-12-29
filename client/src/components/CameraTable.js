@@ -1,9 +1,7 @@
-// 
-
 import React, { useState } from 'react';
 import { DataTable } from 'primereact/datatable';
 import { Column } from 'primereact/column';
-import { Paginator } from 'primereact/paginator';
+import { Link } from 'react-router-dom';
 
 const CameraTable = (props) => {
   const [globalFilter, setGlobalFilter] = useState('');
@@ -31,16 +29,31 @@ const CameraTable = (props) => {
   const alertsBodyTemplate = (rowData) => {
     return (
       <ul>
-        {rowData.alerts.map((alert, index) => (
+        {rowData.alerts?.length > 0 ?rowData.alerts.map((alert, index) => (
           <li key={index}>{alert.name}</li>
-        ))}
+        )): "No alerts"}
       </ul>
+    );
+  };
+
+  const liveFeedTemplate = (camera) => {
+    const url = `/cameravideo?url=${encodeURIComponent(camera?.rtspMeLink)}&id=${encodeURIComponent(camera?._id)}`;
+    return (
+      <Link to={url} className="live-feed-link">
+        Live Feed
+      </Link>
     );
   };
 
   const header = (
     <div>
       <h1>Camera Table</h1>
+      <input
+        type="text"
+        className="p-inputtext p-component"
+        placeholder="Search"
+        onChange={(e) => setGlobalFilter(e.target.value)}
+      />
     </div>
   );
 
@@ -49,29 +62,20 @@ const CameraTable = (props) => {
     setRows(event.rows);
   };
 
-  const filterHeader = (
-    <input
-      type="text"
-      className="p-inputtext p-component"
-      placeholder="Search"
-      onChange={(e) => setGlobalFilter(e.target.value)}
-    />
-  );
-
   return (
     <div className="datatable">
       <DataTable value={props.cameras} header={header} globalFilter={globalFilter} first={first} rows={rows}
         onPage={onPageChange} paginator rowsPerPageOptions={[5, 10, 20]}>
-        <Column field="name" header="Name" filter filterPlaceholder="Search by name" filterMatchMode="contains" filterHeader={filterHeader} />
-        <Column field="cameraType" header="Type" filter filterPlaceholder="Search by type" filterMatchMode="contains" filterHeader={filterHeader} />
-        <Column field="healthStatus" header="Health" body={healthStatusBodyTemplate} filter filterPlaceholder="Search by health" filterMatchMode="contains" filterHeader={filterHeader} />
-        <Column field="buildingName" header="Building" filter filterPlaceholder="Search by building" filterMatchMode="contains" filterHeader={filterHeader} />
-        <Column field="locationType" header="Location Type" filter filterPlaceholder="Search by location type" filterMatchMode="contains" filterHeader={filterHeader} />
-        <Column field="dataStorage" header="Storage" filter filterPlaceholder="Search by storage" filterMatchMode="contains" filterHeader={filterHeader} />
-        <Column field="timeframes" header="Timeframe" filter filterPlaceholder="Search by timeframe" filterMatchMode="contains" filterHeader={filterHeader} />
-        <Column field="operationStatus" header="Operation Status" body={operationStatusBodyTemplate} filter filterPlaceholder="Search by operation status" filterMatchMode="contains" filterHeader={filterHeader} />
-        <Column field="rtspMeLink" header="Live Feed" filter filterPlaceholder="Search by Live Feed" filterMatchMode="contains" filterHeader={filterHeader} />
-        <Column field="alerts" header="Alerts" body={alertsBodyTemplate} filter filterPlaceholder="Search by alerts" filterMatchMode="contains" filterHeader={filterHeader} />
+        <Column field="name" header="Name" filter filterPlaceholder="Search by name" />
+        <Column field="cameraType" header="Type" filter filterPlaceholder="Search by type" />
+        <Column field="healthStatus" header="Health" body={healthStatusBodyTemplate} filter filterPlaceholder="Search by health" />
+        <Column field="buildingName" header="Building" filter filterPlaceholder="Search by building" />
+        <Column field="locationType" header="Location Type" filter filterPlaceholder="Search by location type" />
+        <Column field="dataStorage" header="Storage" filter filterPlaceholder="Search by storage" />
+        <Column field="timeframes" header="Timeframe" filter filterPlaceholder="Search by timeframe" />
+        <Column field="operationStatus" header="Operation Status" body={operationStatusBodyTemplate} filter filterPlaceholder="Search by operation status" />
+        <Column field="rtspMeLink" header="Live Feed" body={liveFeedTemplate} />
+        <Column field="alerts" header="Alerts" body={alertsBodyTemplate} filter filterPlaceholder="Search by alerts" />
       </DataTable>
     </div>
   );
